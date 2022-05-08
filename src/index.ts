@@ -5,9 +5,9 @@ import { createServer } from "http";
 import cors from "cors";
 import morgan from "morgan";
 
-import { IHttpResponse, MessageStatus } from "./utils/httpResponse";
+import { IHttpResponse } from "./utils/httpResponse";
 import { logger, LoggerStream } from "./utils/logger";
-import winston from "winston";
+import { notFoundHandler } from "./handler/404/notFoundHandler";
 
 // server config
 dotenv.config({ path: path.join(__dirname, "..", ".env") });
@@ -16,20 +16,14 @@ const server = createServer(app);
 const port = process.env.PORT || 8080;
 
 // middlewares
-app.use(cors())
-app.use(morgan("combined", { stream: new LoggerStream() }))
+app.use(cors());
+app.use(morgan("combined", { stream: new LoggerStream() }));
 
 app.use((_, res) => {
-    const response: IHttpResponse<null> = {
-        code: 404,
-        message: MessageStatus.BadRequest,
-        error: "",
-        data: null
-    }
-    res.status(response.code).json(response);
+  const response: IHttpResponse<null> = notFoundHandler();
+  res.status(response.code).json(response);
 });
 
 server.listen(port, () => {
-    logger.info({message: `server running on port ${port}`});
-})
-
+  logger.info({ message: `server running on port ${port}` });
+});
