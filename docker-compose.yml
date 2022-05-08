@@ -1,0 +1,17 @@
+version: "3"
+services:
+  app:
+    container_name: api-test
+    restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    links:
+      - mongo
+
+  mongo:
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
