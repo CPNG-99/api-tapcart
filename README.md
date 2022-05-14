@@ -157,7 +157,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     "store_address": "store address",
     "store_description": "store description",
     "qr_code": {
-      "data": [01, 02, 03], // Buffer
+      "data": [01, 02, 03],
       "content_type": "image/png"
     }
   }
@@ -217,7 +217,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
       "product_name": "product name",
       "description": "description",
       "image": {
-        "data": [01, 02, 03], // Buffer
+        "data": [01, 02, 03],
         "content_type": "image/png"
       },
       "price": 20000,
@@ -228,7 +228,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
       "product_name": "product name",
       "description": "description",
       "image": {
-        "data": [01, 02, 03], // Buffer
+        "data": [01, 02, 03],
         "content_type": "image/png"
       },
       "price": 20000,
@@ -253,7 +253,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "product_name": "product name",
   "description": "description",
   "image": {
-    "data": [01, 02, 03], // Buffer
+    "data": [01, 02, 03],
     "content_type": "image/png"
   },
   "price": 20000,
@@ -288,7 +288,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "product_name": "product name",
   "description": "description",
   "image": {
-    "data": [01, 02, 03], // Buffer
+    "data": [01, 02, 03],
     "content_type": "image/png"
   },
   "price": 20000,
@@ -355,7 +355,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "data": {
     "purchase_id": "purchase id",
     "qr_code": {
-      "data": [01, 02, 03], // Buffer
+      "data": [01, 02, 03],
       "content_type": "image/png"
     }
   }
