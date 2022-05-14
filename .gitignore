@@ -10,5 +10,6 @@ build/
 # volumes
 data/
 
-# others
+# error log
 yarn-error.log
+package-lock.json
