@@ -7,7 +7,9 @@ import morgan from "morgan";
 
 import { IHttpResponse } from "./utils/httpResponse";
 import { logger, LoggerStream } from "./utils/logger";
-import { notFoundHandler } from "./handler/404/notFoundHandler";
+
+// Controllers
+import notFoundController from "./notFound/notFound.controller";
 
 // server config
 dotenv.config({ path: path.join(__dirname, "..", ".env") });
@@ -20,7 +22,7 @@ app.use(cors());
 app.use(morgan("combined", { stream: new LoggerStream() }));
 
 app.use((_, res) => {
-  const response: IHttpResponse<null> = notFoundHandler();
+  const response: IHttpResponse<null> = notFoundController.notFound();
   res.status(response.code).json(response);
 });
 

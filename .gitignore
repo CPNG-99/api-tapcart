@@ -9,3 +9,6 @@ build/
 
 # volumes
 data/
+
+# others
+yarn-error.log
