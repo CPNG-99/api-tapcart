@@ -1,5 +1,7 @@
 # API - TapCard
 
+![main](https://github.com/CPNG-99/api-tapcart/actions/workflows/deploy.yml/badge.svg?branch=master)
+
 Api for TapCard mobile application
 
 ## - Development
