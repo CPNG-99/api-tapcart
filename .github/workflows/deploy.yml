@@ -1,0 +1,36 @@
+name: Deploy Heroku
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # setup env
+      - uses: actions/checkout@v2
+      - name: Create env file
+        env:
+          PORT: 8080
+          DEBUG: true
+        run: |
+          touch .env
+          echo PORT="$PORT" >> .env
+          echo DEBUG="$DEBUG" >> .env
+          echo "cat .env"
+          cat .env
+          echo "ls -a ."
+          ls -a .
+          echo "ls -a ${{ github.workspace }}"
+          ls -a ${{ github.workspace }}
+        shell: bash
+
+      # deploy to heroku server
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "api-tapcart"
+          heroku_email: "ryannadiputraa@gmail.com"
+          usedocker: true
