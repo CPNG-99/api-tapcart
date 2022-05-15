@@ -19,6 +19,8 @@ class MongoseService {
 
   connectWithRetry() {
     logger.info("Attempting MongoDB connection (will retry if needed)");
+    logger.info(dbConnection);
+
     mongoose
       .connect(dbConnection, this.mongoseOptions)
       .then(() => {

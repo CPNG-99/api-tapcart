@@ -1,7 +1,7 @@
-import { IHttpResponse, MessageStatus } from "../utils/httpResponse";
+import { HttpResponse, MessageStatus } from "../../utils/http.response";
 
 class NotFoundController {
-  notFound(): IHttpResponse<null> {
+  notFound(): HttpResponse<null> {
     return {
       code: 404,
       message: MessageStatus.BadRequest,

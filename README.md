@@ -20,7 +20,7 @@ npm install
 docker-compose up -d
 ```
 
-if you wish to use nodemon during development you can run it with `yarn` or `npm` but need to specify different port inside `.env` file form one that used on `Docker`.
+if you wish to use nodemon during development you can run the `mongo` service only, and then run the local server with `yarn` or `npm`.
 
 ```sh
 yarn dev
