@@ -1,7 +1,10 @@
 import { HttpResponse, MessageStatus } from "../../utils/http.response";
-import { IAuthController, IAuthService } from "./auth.dao";
-import { AcessTokenDTO } from "./auth.dto";
+import { RegisterDTO } from "./auth.dto";
+import { IAuthService } from "./auth.service";
 
+export abstract class IAuthController {
+  abstract register(payload: RegisterDTO): Promise<HttpResponse<null>>;
+}
 class AuthController implements IAuthController {
   service: IAuthService;
 
@@ -9,23 +12,20 @@ class AuthController implements IAuthController {
     this.service = service;
   }
 
-  register(): HttpResponse<AcessTokenDTO | null> {
+  async register(payload: RegisterDTO): Promise<HttpResponse<null>> {
     try {
-      const tokens = this.service.register();
+      await this.service.register(payload);
       return {
-        code: 200,
-        message: "unimplemented",
+        code: 201,
+        message: MessageStatus.Success,
         error: "",
-        data: {
-          accessToken: tokens.accessToken,
-          refreshToken: tokens.refreshToken,
-        },
+        data: null,
       };
     } catch (error: any) {
       return {
         code: 500,
         message: MessageStatus.InternalServerError,
-        error: error?.message,
+        error: error?.message || error,
         data: null,
       };
     }
