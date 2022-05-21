@@ -9,11 +9,15 @@ class StoreRepository implements IStoreRepository {
   Schema = MongooseService.getMongoose().Schema;
   storeSchema = new this.Schema({
     _id: String,
-    email: String,
-    password: String,
-    storeName: String,
-    storeAddress: String,
-    storeDescription: { type: String, select: false },
+    email: { type: String, unique: true, required: true },
+    password: { type: String, select: false, required: true },
+    storeName: { type: String, required: true },
+    storeAddress: { type: String },
+    storeDescription: { type: String },
+    // qrCode: {
+    //   data: { type: Buffer, required: true },
+    //   contentType: { type: String, required: true },
+    // },
   });
 
   Store = MongooseService.getMongoose().model<RegisterDTO>(
@@ -26,7 +30,7 @@ class StoreRepository implements IStoreRepository {
       const store = new this.Store(payload);
       await store.save();
     } catch (error: any) {
-      throw new Error(`Fail to register store ${error?.message || error}`);
+      throw new Error(error?.message || error);
     }
   }
 }

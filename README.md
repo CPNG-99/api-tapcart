@@ -72,7 +72,12 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "message": "Success",
   "code": 201,
   "error": "",
-  "data": null
+  "data": {
+    "qr_code": {
+      "data": [10, 26, 83],
+      "content_type": "image/png"
+    }
+  }
 }
 ```
 
@@ -102,6 +107,35 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "data": {
     "access_token": "O1ePdqJk5E9KE+H0BuAz54+e5hfcOUkG0xy5qJZ7dKQ=",
     "refresh_token": "rh6+nWqsV8g0zeYTwH4NsOvz/5rNoQVUtOg589+HbhY="
+  }
+}
+```
+
+### - Get User Info
+
+- Method : `GET`
+- Endpoint : `/api/v1/info`
+- Header :
+  - Content-Type : `application/json`
+  - Accept : `application/json`
+  - Authorization: `Bearer <access_token>`
+- response :
+
+```json
+{
+  "message": "Success",
+  "code": 200,
+  "error": "",
+  "data": {
+    "store_id": "store id",
+    "email": "johndoe@gmail.com",
+    "store_name": "store name",
+    "store_address": "store address",
+    "store_description": "store description",
+    "qr_code": {
+      "data": [10, 26, 83],
+      "content_type": "image/png"
+    }
   }
 }
 ```

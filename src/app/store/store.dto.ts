@@ -3,6 +3,6 @@ export interface RegisterDTO {
   email: String;
   password: String;
   storeName: String;
-  storeAdress: String;
+  storeAddress: String;
   storeDescription: String;
 }

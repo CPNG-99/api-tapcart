@@ -1,9 +1,9 @@
 export interface RegisterDTO {
   email: String;
   password: String;
-  storeName: String;
-  storeAdress: String;
-  storeDescription: String;
+  store_name: String;
+  store_address: String;
+  store_description: String;
 }
 
 export interface AcessTokenDTO {

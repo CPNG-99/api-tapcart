@@ -23,8 +23,8 @@ class AuthController implements IAuthController {
       };
     } catch (error: any) {
       return {
-        code: 500,
-        message: MessageStatus.InternalServerError,
+        code: 400,
+        message: MessageStatus.BadRequest,
         error: error?.message || error,
         data: null,
       };

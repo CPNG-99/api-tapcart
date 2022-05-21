@@ -21,10 +21,10 @@ import AuthRoutes from "./app/auth/auth.routes";
 const app = express();
 const server = createServer(app);
 const port = Number(process.env.PORT) || 8080;
-const routes: Array<RoutesConfig> = [];
 
 // middlewares
 app.use(cors());
+app.use(express.json());
 app.use(morgan("combined", { stream: new LoggerStream() }));
 
 // auth
