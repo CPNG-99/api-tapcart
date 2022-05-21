@@ -1,10 +1,10 @@
-import { HttpResponse, MessageStatus } from "../../utils/http.response";
+import { HttpResponse, messageStatus } from "../../utils/http.response";
 
 class NotFoundController {
   notFound(): HttpResponse<null> {
     return {
       code: 404,
-      message: MessageStatus.BadRequest,
+      message: messageStatus[400],
       error: "",
       data: null,
     };

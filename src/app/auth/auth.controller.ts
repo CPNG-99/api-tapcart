@@ -1,4 +1,4 @@
-import { HttpResponse, MessageStatus } from "../../utils/http.response";
+import { HttpResponse, messageStatus } from "../../utils/http.response";
 import { RegisterDTO } from "./auth.dto";
 import { IAuthService } from "./auth.service";
 
@@ -14,17 +14,17 @@ class AuthController implements IAuthController {
 
   async register(payload: RegisterDTO): Promise<HttpResponse<null>> {
     try {
-      await this.service.register(payload);
+      const resp = await this.service.register(payload);
       return {
-        code: 201,
-        message: MessageStatus.Success,
-        error: "",
+        code: resp.statusCode,
+        message: messageStatus[resp.statusCode],
+        error: resp.error,
         data: null,
       };
     } catch (error: any) {
       return {
-        code: 400,
-        message: MessageStatus.BadRequest,
+        code: 500,
+        message: messageStatus[500],
         error: error?.message || error,
         data: null,
       };

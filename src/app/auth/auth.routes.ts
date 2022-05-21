@@ -1,6 +1,6 @@
 import { Application, Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { HttpResponse, MessageStatus } from "../../utils/http.response";
+import { HttpResponse, messageStatus } from "../../utils/http.response";
 import { RoutesConfig } from "../../utils/routes.config";
 import { IAuthController } from "./auth.controller";
 
@@ -29,7 +29,7 @@ class AuthRoutes extends RoutesConfig {
 
             const response: HttpResponse<null> = {
               code: 400,
-              message: MessageStatus.BadRequest,
+              message: messageStatus[400],
               error: `[${errorParams}]`,
               data: null,
             };

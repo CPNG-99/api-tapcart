@@ -5,7 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 
 export abstract class IAuthService {
-  abstract register(payload: RegisterDTO): Promise<void>;
+  abstract register(
+    payload: RegisterDTO
+  ): Promise<{ statusCode: number; error: String }>;
 }
 
 class AuthService implements IAuthService {
@@ -15,7 +17,9 @@ class AuthService implements IAuthService {
     this.repository = repository;
   }
 
-  async register(payload: RegisterDTO) {
+  async register(
+    payload: RegisterDTO
+  ): Promise<{ statusCode: number; error: String }> {
     try {
       const uuid = uuidv4();
       const salt = await bcrypt.genSalt(10);
@@ -33,7 +37,8 @@ class AuthService implements IAuthService {
         storeDescription: payload.store_description,
       };
 
-      await this.repository.save(store);
+      const resp = await this.repository.save(store);
+      return resp;
     } catch (error: any) {
       throw new Error(`Fail to register store: ${error?.message || error}`);
     }

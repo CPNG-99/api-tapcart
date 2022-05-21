@@ -1,8 +1,11 @@
 import { RegisterDTO } from "./store.dto";
 import MongooseService from "../../utils/db.connection";
+import { logger } from "../../utils/logger";
 
 export abstract class IStoreRepository {
-  abstract save(store: RegisterDTO): Promise<void>;
+  abstract save(
+    store: RegisterDTO
+  ): Promise<{ statusCode: number; error: String }>;
 }
 
 class StoreRepository implements IStoreRepository {
@@ -25,20 +28,29 @@ class StoreRepository implements IStoreRepository {
     this.storeSchema
   );
 
-  async save(payload: RegisterDTO): Promise<void> {
+  async save(
+    payload: RegisterDTO
+  ): Promise<{ statusCode: number; error: String }> {
     try {
       const registeredEmail = await this.Store.findOne({
         email: payload.email,
       });
-      if (registeredEmail) throw new Error("email already registered");
+      if (registeredEmail) {
+        logger.warn("email already registered");
+        return { statusCode: 400, error: "email already registered" };
+      }
 
       const registeredStoreName = await this.Store.findOne({
         storeName: payload.storeName,
       });
-      if (registeredStoreName) throw new Error("store name already taken");
+      if (registeredStoreName) {
+        logger.warn("store name already taken");
+        return { statusCode: 400, error: "store name already taken" };
+      }
 
       const store = new this.Store(payload);
       await store.save();
+      return { statusCode: 201, error: "" };
     } catch (error: any) {
       throw new Error(error?.message || error);
     }

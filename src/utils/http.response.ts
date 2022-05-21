@@ -1,13 +1,15 @@
-export enum MessageStatus {
-  Success = "Success",
-  BadRequest = "Bad Request",
-  Unauthorized = "Unauthorized",
-  InternalServerError = "Internal Server Error",
-}
-
+export const messageStatus: { [key: number]: String } = {
+  200: "Success",
+  201: "Created",
+  400: "Bad Request",
+  401: "Unauthorized",
+  403: "Forbidden",
+  404: "Not Found",
+  500: "Internal Server Error",
+};
 export interface HttpResponse<Type> {
   code: number;
-  message: string;
-  error: string;
+  message: String;
+  error: String;
   data: Type | null;
 }
