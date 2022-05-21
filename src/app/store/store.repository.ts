@@ -11,7 +11,7 @@ class StoreRepository implements IStoreRepository {
     _id: String,
     email: { type: String, unique: true, required: true },
     password: { type: String, select: false, required: true },
-    storeName: { type: String, required: true },
+    storeName: { type: String, unique: true, required: true },
     storeAddress: { type: String },
     storeDescription: { type: String },
     // qrCode: {
@@ -27,6 +27,16 @@ class StoreRepository implements IStoreRepository {
 
   async save(payload: RegisterDTO): Promise<void> {
     try {
+      const registeredEmail = await this.Store.findOne({
+        email: payload.email,
+      });
+      if (registeredEmail) throw new Error("email already registered");
+
+      const registeredStoreName = await this.Store.findOne({
+        storeName: payload.storeName,
+      });
+      if (registeredStoreName) throw new Error("store name already taken");
+
       const store = new this.Store(payload);
       await store.save();
     } catch (error: any) {
