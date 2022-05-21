@@ -5,4 +5,5 @@ export interface RegisterDTO {
   storeName: String;
   storeAddress: String;
   storeDescription: String;
+  qrCode: string;
 }

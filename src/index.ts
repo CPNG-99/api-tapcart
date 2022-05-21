@@ -10,12 +10,12 @@ dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
 import { HttpResponse } from "./utils/http.response";
 import { logger, LoggerStream } from "./utils/logger";
-import { RoutesConfig } from "./utils/routes.config";
 import notFoundController from "./app/notFound/notFound.controller";
 import StoreRepository from "./app/store/store.repository";
 import AuthService from "./app/auth/auth.service";
 import AuthController from "./app/auth/auth.controller";
 import AuthRoutes from "./app/auth/auth.routes";
+import QRService from "./app/qr/qr.service";
 
 // server config
 const app = express();
@@ -27,9 +27,12 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("combined", { stream: new LoggerStream() }));
 
+// qr
+const qrService = new QRService();
+
 // auth
 const storeRepository = new StoreRepository();
-const authService = new AuthService(storeRepository);
+const authService = new AuthService(storeRepository, qrService);
 const authController = new AuthController(authService);
 new AuthRoutes(app, authController);
 

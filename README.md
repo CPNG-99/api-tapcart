@@ -73,10 +73,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "code": 201,
   "error": "",
   "data": {
-    "qr_code": {
-      "data": [10, 26, 83],
-      "content_type": "image/png"
-    }
+    "qr_code": "data:image/png;base64"
   }
 }
 ```
@@ -132,10 +129,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     "store_name": "store name",
     "store_address": "store address",
     "store_description": "store description",
-    "qr_code": {
-      "data": [10, 26, 83],
-      "content_type": "image/png"
-    }
+    "qr_code": "data:image/png;base64"
   }
 }
 ```
@@ -192,10 +186,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     "store_name": "store name",
     "store_address": "store address",
     "store_description": "store description",
-    "qr_code": {
-      "data": [10, 26, 83],
-      "content_type": "image/png"
-    }
+    "qr_code": "data:image/png;base64"
   }
 }
 ```
@@ -390,10 +381,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "error": "",
   "data": {
     "purchase_id": "purchase id",
-    "qr_code": {
-      "data": [10, 26, 83],
-      "content_type": "image/png"
-    }
+    "qr_code": "data:image/png;base64"
   }
 }
 ```

@@ -5,7 +5,7 @@ import { logger } from "../../utils/logger";
 export abstract class IStoreRepository {
   abstract save(
     store: RegisterDTO
-  ): Promise<{ statusCode: number; error: String }>;
+  ): Promise<{ statusCode: number; error: String; qrCode: string | null }>;
 }
 
 class StoreRepository implements IStoreRepository {
@@ -17,10 +17,7 @@ class StoreRepository implements IStoreRepository {
     storeName: { type: String, unique: true, required: true },
     storeAddress: { type: String },
     storeDescription: { type: String },
-    // qrCode: {
-    //   data: { type: Buffer, required: true },
-    //   contentType: { type: String, required: true },
-    // },
+    qrCode: { type: String, required: true, unique: true },
   });
 
   Store = MongooseService.getMongoose().model<RegisterDTO>(
@@ -30,14 +27,18 @@ class StoreRepository implements IStoreRepository {
 
   async save(
     payload: RegisterDTO
-  ): Promise<{ statusCode: number; error: String }> {
+  ): Promise<{ statusCode: number; error: String; qrCode: string | null }> {
     try {
       const registeredEmail = await this.Store.findOne({
         email: payload.email,
       });
       if (registeredEmail) {
         logger.warn("email already registered");
-        return { statusCode: 400, error: "email already registered" };
+        return {
+          statusCode: 400,
+          error: "email already registered",
+          qrCode: null,
+        };
       }
 
       const registeredStoreName = await this.Store.findOne({
@@ -45,12 +46,16 @@ class StoreRepository implements IStoreRepository {
       });
       if (registeredStoreName) {
         logger.warn("store name already taken");
-        return { statusCode: 400, error: "store name already taken" };
+        return {
+          statusCode: 400,
+          error: "store name already taken",
+          qrCode: null,
+        };
       }
 
       const store = new this.Store(payload);
       await store.save();
-      return { statusCode: 201, error: "" };
+      return { statusCode: 201, error: "", qrCode: payload.qrCode };
     } catch (error: any) {
       throw new Error(error?.message || error);
     }
