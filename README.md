@@ -6,7 +6,7 @@ Api for TapCard mobile application
 
 ## - Development
 
-To simplified development you need to have `yarn` or `npm`, `Docker` and `Docker Compose` installed on your machine. Then run these command to install dependencies and start development server :
+To simplified development you need to have `yarn` or `npm`, `Docker` and `Docker Compose` (optional) installed on your machine. Then run these command to install dependencies, running local database, and start development server :
 
 ```sh
 yarn

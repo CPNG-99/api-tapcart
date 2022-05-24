@@ -10,12 +10,12 @@ dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
 import { HttpResponse } from "./utils/http.response";
 import { logger, LoggerStream } from "./utils/logger";
-import notFoundController from "./app/notFound/notFound.controller";
-import StoreRepository from "./app/store/store.repository";
-import AuthService from "./app/auth/auth.service";
-import AuthController from "./app/auth/auth.controller";
-import AuthRoutes from "./app/auth/auth.routes";
-import QRService from "./app/qr/qr.service";
+import notFoundController from "./api/notFound/notFound.controller";
+import StoreRepository from "./api/store/store.repository";
+import AuthService from "./api/auth/auth.service";
+import AuthController from "./api/auth/auth.controller";
+import AuthRoutes from "./api/auth/auth.routes";
+import QRService from "./api/qr/qr.service";
 
 // server config
 const app = express();

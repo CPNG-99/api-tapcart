@@ -4,7 +4,6 @@ import { RegisterDTO as StoreDTO } from "../store/store.dto";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import { IQRService } from "../qr/qr.service";
-import { logger } from "../../utils/logger";
 
 export abstract class IAuthService {
   abstract register(

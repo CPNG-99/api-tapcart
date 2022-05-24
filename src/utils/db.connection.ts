@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { logger } from "./logger";
 
-const dbConnection = process.env.DB_URI ?? "";
+const DB_URI = process.env.DB_URI ?? "";
 
 class MongoseService {
   private count = 0;
@@ -19,10 +19,10 @@ class MongoseService {
 
   connectWithRetry() {
     logger.info("Attempting MongoDB connection (will retry if needed)");
-    logger.info(dbConnection);
+    logger.info(DB_URI);
 
     mongoose
-      .connect(dbConnection, this.mongoseOptions)
+      .connect(DB_URI, this.mongoseOptions)
       .then(() => {
         logger.info("MongoDB connected");
       })
