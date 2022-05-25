@@ -31,8 +31,7 @@ class AuthService implements IAuthService {
         salt
       );
 
-      const jsonData = JSON.stringify(uuid);
-      const qrCode = await this.qrService.generateQR(jsonData);
+      const qrCode = await this.qrService.generateQR(uuid);
 
       const store: StoreDTO = {
         _id: uuid,
