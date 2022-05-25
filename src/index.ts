@@ -16,6 +16,9 @@ import AuthService from "./api/auth/auth.service";
 import AuthController from "./api/auth/auth.controller";
 import AuthRoutes from "./api/auth/auth.routes";
 import QRService from "./api/qr/qr.service";
+import StoreService from "./api/store/store.service";
+import StoreController from "./api/store/store.controller";
+import StoreRoutes from "./api/store/store.routes";
 
 // server config
 const app = express();
@@ -30,8 +33,13 @@ app.use(morgan("combined", { stream: new LoggerStream() }));
 // qr
 const qrService = new QRService();
 
-// auth
+// store
 const storeRepository = new StoreRepository();
+const storeService = new StoreService(storeRepository);
+const storeController = new StoreController(storeService);
+new StoreRoutes(app, storeController);
+
+// auth
 const authService = new AuthService(storeRepository, qrService);
 const authController = new AuthController(authService);
 new AuthRoutes(app, authController);

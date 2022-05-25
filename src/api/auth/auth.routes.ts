@@ -27,18 +27,18 @@ class AuthRoutes extends RoutesConfig {
             const errorParams: String[] = [];
             errors.array().map((error) => errorParams.push(error.param));
 
-            const response: HttpResponse<null> = {
+            const resp: HttpResponse<null> = {
               code: 400,
               message: messageStatus[400],
               error: `[${errorParams}]`,
               data: null,
             };
-            return res.status(400).json(response);
+            return res.status(400).json(resp);
           }
 
           const payload = req.body;
-          const response = await this.controller.register(payload);
-          res.status(response.code).json(response);
+          const resp = await this.controller.register(payload);
+          res.status(resp.code).json(resp);
         }
       );
 

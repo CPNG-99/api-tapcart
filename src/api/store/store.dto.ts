@@ -7,3 +7,10 @@ export interface RegisterDTO {
   storeDescription: String;
   qrCode: string;
 }
+
+export interface StoreDTO {
+  storeName: String;
+  storeAddress: String;
+  storeDescription: String;
+  qrCode: string;
+}

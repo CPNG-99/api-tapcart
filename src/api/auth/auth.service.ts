@@ -45,7 +45,11 @@ class AuthService implements IAuthService {
       };
 
       const resp = await this.repository.save(store);
-      return resp;
+      return {
+        statusCode: !resp.error ? 201 : 400,
+        error: resp.error,
+        qrCode: resp.qrCode,
+      };
     } catch (error: any) {
       throw new Error(`Fail to register store: ${error?.message || error}`);
     }

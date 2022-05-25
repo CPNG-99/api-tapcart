@@ -108,7 +108,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Get User Info
+### - Get User (Store) Info
 
 - Method : `GET`
 - Endpoint : `/api/v1/info`

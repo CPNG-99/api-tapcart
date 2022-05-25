@@ -19,6 +19,7 @@ class AuthController implements IAuthController {
     payload: RegisterDTO
   ): Promise<HttpResponse<null | { qrCode: string }>> {
     try {
+      logger.info(payload);
       const resp = await this.service.register(payload);
       return {
         code: resp.statusCode,
