@@ -3,8 +3,8 @@ import { IStoreRepository } from "./store.repository";
 
 export abstract class IStoreService {
   abstract getStoreDetail(
-    storeId: String
-  ): Promise<{ statusCode: number; error: String; data: StoreDTO | null }>;
+    storeId: string
+  ): Promise<{ statusCode: number; error: string; data: StoreDTO | null }>;
 }
 
 class StoreService implements IStoreService {
@@ -15,8 +15,8 @@ class StoreService implements IStoreService {
   }
 
   async getStoreDetail(
-    storeId: String
-  ): Promise<{ statusCode: number; error: String; data: StoreDTO | null }> {
+    storeId: string
+  ): Promise<{ statusCode: number; error: string; data: StoreDTO | null }> {
     try {
       const resp = await this.repository.getById(storeId);
       return {

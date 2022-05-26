@@ -1,12 +1,25 @@
 export interface RegisterDTO {
-  email: String;
-  password: String;
-  store_name: String;
-  store_address: String;
-  store_description: String;
+  email: string;
+  password: string;
+  store_name: string;
+  store_address: string;
+  store_description: string;
 }
 
-export interface AcessTokenDTO {
-  accessToken: String;
-  refreshToken: String;
+export interface LoginDTO {
+  email: string;
+  password: string;
+}
+
+export interface JwtSignPayload {
+  store_id: string;
+  email: string;
+}
+
+export interface AccessTokenDTO {
+  access_token: string;
+}
+
+export interface RegisteredDTO {
+  qr_code: string;
 }

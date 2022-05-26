@@ -5,7 +5,7 @@ import { IStoreService } from "./store.service";
 
 export abstract class IStoreController {
   abstract getStoreDetail(
-    storeId: String
+    storeId: string
   ): Promise<HttpResponse<StoreDTO | null>>;
 }
 
@@ -17,7 +17,7 @@ class StoreController implements IStoreController {
   }
 
   async getStoreDetail(
-    storeId: String
+    storeId: string
   ): Promise<HttpResponse<StoreDTO | null>> {
     try {
       const resp = await this.service.getStoreDetail(storeId);

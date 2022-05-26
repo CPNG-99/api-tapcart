@@ -1,16 +1,22 @@
 export interface RegisterDTO {
-  _id: String;
-  email: String;
-  password: String;
-  storeName: String;
-  storeAddress: String;
-  storeDescription: String;
-  qrCode: string;
+  _id: string;
+  email: string;
+  password: string;
+  store_name: string;
+  store_address: string;
+  store_description: string;
+  qr_code: string;
+}
+
+export interface LoginDTO {
+  _id: string;
+  email: string;
+  password: string;
 }
 
 export interface StoreDTO {
-  storeName: String;
-  storeAddress: String;
-  storeDescription: String;
-  qrCode: string;
+  store_name: string;
+  store_address: string;
+  store_description: string;
+  qr_code: string;
 }

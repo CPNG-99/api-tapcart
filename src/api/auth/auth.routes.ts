@@ -42,6 +42,28 @@ class AuthRoutes extends RoutesConfig {
         }
       );
 
+    this.app
+      .route("/auth/v1/login")
+      .post(body("email").isEmail(), async (req: Request, res: Response) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          const errorParams: String[] = [];
+          errors.array().map((error) => errorParams.push(error.param));
+
+          const resp: HttpResponse<null> = {
+            code: 400,
+            message: messageStatus[400],
+            error: `[${errorParams}]`,
+            data: null,
+          };
+          return res.status(400).json(resp);
+        }
+
+        const payload = req.body;
+        const resp = await this.controller.login(payload);
+        res.status(resp.code).json(resp);
+      });
+
     return this.app;
   }
 }

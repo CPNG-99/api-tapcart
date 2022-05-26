@@ -1,10 +1,10 @@
 import QRCode from "qrcode";
 
-export abstract class IQRService {
+export abstract class IQRUtils {
   abstract generateQR(data: string): Promise<string>;
 }
 
-class QRService implements IQRService {
+class QRUtils implements IQRUtils {
   async generateQR(data: string): Promise<string> {
     const qrCode = await QRCode.toDataURL(data)
       .then((qr) => qr)
@@ -15,4 +15,4 @@ class QRService implements IQRService {
   }
 }
 
-export default QRService;
+export default QRUtils;

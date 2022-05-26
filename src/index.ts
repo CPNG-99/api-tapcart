@@ -15,10 +15,11 @@ import StoreRepository from "./api/store/store.repository";
 import AuthService from "./api/auth/auth.service";
 import AuthController from "./api/auth/auth.controller";
 import AuthRoutes from "./api/auth/auth.routes";
-import QRService from "./api/qr/qr.service";
 import StoreService from "./api/store/store.service";
 import StoreController from "./api/store/store.controller";
 import StoreRoutes from "./api/store/store.routes";
+import QRUtils from "./utils/qr.utils";
+import JwtUtils from "./utils/jwt.utils";
 
 // server config
 const app = express();
@@ -31,7 +32,10 @@ app.use(express.json());
 app.use(morgan("combined", { stream: new LoggerStream() }));
 
 // qr
-const qrService = new QRService();
+const qrUtils = new QRUtils();
+
+// jwt
+const jwtUtils = new JwtUtils();
 
 // store
 const storeRepository = new StoreRepository();
@@ -40,7 +44,7 @@ const storeController = new StoreController(storeService);
 new StoreRoutes(app, storeController);
 
 // auth
-const authService = new AuthService(storeRepository, qrService);
+const authService = new AuthService(storeRepository, qrUtils, jwtUtils);
 const authController = new AuthController(authService);
 new AuthRoutes(app, authController);
 

@@ -1,14 +1,18 @@
-import { RegisterDTO, StoreDTO } from "./store.dto";
+import { LoginDTO, RegisterDTO, StoreDTO } from "./store.dto";
 import MongooseService from "../../utils/db.connection";
 import { logger } from "../../utils/logger";
+import { StoreDAO } from "./store.dao";
 
 export abstract class IStoreRepository {
   abstract save(
     store: RegisterDTO
-  ): Promise<{ error: String; qrCode: string | null }>;
+  ): Promise<{ error: string; qrCode: string | null }>;
   abstract getById(
-    storeId: String
-  ): Promise<{ error: String; data: StoreDTO | null }>;
+    storeId: string
+  ): Promise<{ error: string; data: StoreDTO | null }>;
+  abstract getByEmail(
+    email: string
+  ): Promise<{ error: string; data: LoginDTO | null }>;
 }
 
 class StoreRepository implements IStoreRepository {
@@ -16,21 +20,21 @@ class StoreRepository implements IStoreRepository {
   storeSchema = new this.Schema({
     _id: String,
     email: { type: String, unique: true, required: true },
-    password: { type: String, select: false, required: true },
+    password: { type: String, required: true },
     storeName: { type: String, unique: true, required: true },
     storeAddress: { type: String },
     storeDescription: { type: String },
     qrCode: { type: String, required: true, unique: true },
   });
 
-  Store = MongooseService.getMongoose().model<RegisterDTO>(
+  Store = MongooseService.getMongoose().model<StoreDAO>(
     "stores",
     this.storeSchema
   );
 
   async save(
     payload: RegisterDTO
-  ): Promise<{ error: String; qrCode: string | null }> {
+  ): Promise<{ error: string; qrCode: string | null }> {
     try {
       const registeredEmail = await this.Store.findOne({
         email: payload.email,
@@ -44,7 +48,7 @@ class StoreRepository implements IStoreRepository {
       }
 
       const registeredStoreName = await this.Store.findOne({
-        storeName: payload.storeName,
+        storeName: payload.store_name,
       });
       if (registeredStoreName) {
         logger.warn("store name already taken");
@@ -54,17 +58,25 @@ class StoreRepository implements IStoreRepository {
         };
       }
 
-      const store = new this.Store(payload);
+      const store = new this.Store({
+        _id: payload._id,
+        email: payload.email,
+        password: payload.password,
+        storeName: payload.store_name,
+        storeAddress: payload.store_address,
+        storeDescription: payload.store_description,
+        qrCode: payload.qr_code,
+      });
       await store.save();
-      return { error: "", qrCode: payload.qrCode };
+      return { error: "", qrCode: payload.qr_code };
     } catch (error: any) {
       throw new Error(error?.message || error);
     }
   }
 
   async getById(
-    storeId: String
-  ): Promise<{ error: String; data: StoreDTO | null }> {
+    storeId: string
+  ): Promise<{ error: string; data: StoreDTO | null }> {
     try {
       const store = await this.Store.findOne({
         _id: storeId,
@@ -80,10 +92,38 @@ class StoreRepository implements IStoreRepository {
       return {
         error: "",
         data: {
-          storeName: store.storeName,
-          storeAddress: store.storeAddress,
-          storeDescription: store.storeDescription,
-          qrCode: store.qrCode,
+          store_name: store.storeName,
+          store_address: store.storeAddress,
+          store_description: store.storeDescription,
+          qr_code: store.qrCode,
+        },
+      };
+    } catch (error: any) {
+      throw new Error(error?.message || error);
+    }
+  }
+
+  async getByEmail(
+    email: string
+  ): Promise<{ error: string; data: LoginDTO | null }> {
+    try {
+      const store = await this.Store.findOne({
+        email: email,
+      });
+
+      if (!store) {
+        logger.warn(`no store found with email of '${email}'`);
+        return {
+          error: `no store found with email of '${email}'`,
+          data: null,
+        };
+      }
+      return {
+        error: "",
+        data: {
+          _id: store._id,
+          email: store.email,
+          password: store.password,
         },
       };
     } catch (error: any) {

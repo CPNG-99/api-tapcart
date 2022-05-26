@@ -2,7 +2,7 @@
 
 ![main](https://github.com/CPNG-99/api-tapcart/actions/workflows/deploy.yml/badge.svg?branch=master)
 
-Api for TapCard mobile application
+API for TapCard mobile application
 
 ## - Development
 
@@ -102,8 +102,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "code": 200,
   "error": "",
   "data": {
-    "access_token": "O1ePdqJk5E9KE+H0BuAz54+e5hfcOUkG0xy5qJZ7dKQ=",
-    "refresh_token": "rh6+nWqsV8g0zeYTwH4NsOvz/5rNoQVUtOg589+HbhY="
+    "access_token": "O1ePdqJk5E9KE+H0BuAz54+e5hfcOUkG0xy5qJZ7dKQ="
   }
 }
 ```
