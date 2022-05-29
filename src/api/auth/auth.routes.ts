@@ -20,7 +20,7 @@ class AuthRoutes extends RoutesConfig {
         body("password").isLength({ min: 8, max: 200 }),
         body("store_name").isLength({ min: 3, max: 200 }),
         body("store_address").isLength({ min: 3, max: 200 }),
-        body("store_description").isLength({ max: 200 }),
+        body("open_hours").isLength({ max: 200 }),
         async (req: Request, res: Response) => {
           const errors = validationResult(req);
           if (!errors.isEmpty()) {

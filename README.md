@@ -61,7 +61,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "password": "password",
   "store_name": "store name",
   "store_address": "store address",
-  "store_description": "store description"
+  "open_hours": "09.00 - 20.00"
 }
 ```
 
@@ -110,7 +110,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 ### - Get User (Store) Info
 
 - Method : `GET`
-- Endpoint : `/api/v1/info`
+- Endpoint : `/api/v1/profile`
 - Header :
   - Content-Type : `application/json`
   - Accept : `application/json`
@@ -127,7 +127,8 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     "email": "johndoe@gmail.com",
     "store_name": "store name",
     "store_address": "store address",
-    "store_description": "store description",
+    "open_hours": "09.00 - 20.00",
+    "is_open": true,
     "qr_code": "data:image/png;base64"
   }
 }
@@ -184,7 +185,8 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     "store_id": "store id",
     "store_name": "store name",
     "store_address": "store address",
-    "store_description": "store description",
+    "open_hours": "09.00 - 20.00",
+    "is_open": true,
     "qr_code": "data:image/png;base64"
   }
 }
@@ -204,7 +206,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 {
   "store_name": "store name",
   "store_address": "store address",
-  "store_description": "store description"
+  "open_hours": "09.00 - 20.00"
 }
 ```
 
