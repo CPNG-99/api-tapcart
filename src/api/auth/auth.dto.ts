@@ -11,7 +11,7 @@ export interface LoginDTO {
   password: string;
 }
 
-export interface JwtSignPayload {
+export interface TokenPayload {
   store_id: string;
   email: string;
 }

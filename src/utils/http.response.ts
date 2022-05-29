@@ -1,6 +1,7 @@
-export const messageStatus: { [key: number]: String } = {
+export const messageStatus: { [key: number]: string } = {
   200: "Success",
   201: "Created",
+  202: "Accepted",
   400: "Bad Request",
   401: "Unauthorized",
   403: "Forbidden",
@@ -9,7 +10,7 @@ export const messageStatus: { [key: number]: String } = {
 };
 export interface HttpResponse<Type> {
   code: number;
-  message: String;
-  error: String;
+  message: string;
+  error: string;
   data: Type | null;
 }

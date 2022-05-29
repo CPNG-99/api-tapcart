@@ -20,6 +20,7 @@ import StoreController from "./api/store/store.controller";
 import StoreRoutes from "./api/store/store.routes";
 import QRUtils from "./utils/qr.utils";
 import JwtUtils from "./utils/jwt.utils";
+import JwtMiddleware from "./utils/jwt.middleware";
 
 // server config
 const app = express();
@@ -36,12 +37,13 @@ const qrUtils = new QRUtils();
 
 // jwt
 const jwtUtils = new JwtUtils();
+const jwtMiddleware = new JwtMiddleware();
 
 // store
 const storeRepository = new StoreRepository();
 const storeService = new StoreService(storeRepository);
 const storeController = new StoreController(storeService);
-new StoreRoutes(app, storeController);
+new StoreRoutes(app, storeController, jwtMiddleware);
 
 // auth
 const authService = new AuthService(storeRepository, qrUtils, jwtUtils);

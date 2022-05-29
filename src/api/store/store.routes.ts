@@ -1,13 +1,20 @@
 import { Application, Request, Response } from "express";
+import { IJwtMiddleware } from "../../utils/jwt.middleware";
 import { RoutesConfig } from "../../utils/routes.config";
 import { IStoreController } from "./store.controller";
 
 class StoreRoutes extends RoutesConfig {
   controller: IStoreController;
+  middleware: IJwtMiddleware;
 
-  constructor(app: Application, controller: IStoreController) {
+  constructor(
+    app: Application,
+    controller: IStoreController,
+    middleware: IJwtMiddleware
+  ) {
     super(app, "StoreRoutes");
     this.controller = controller;
+    this.middleware = middleware;
   }
 
   configureRoutes(): Application {

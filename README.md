@@ -195,7 +195,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 ### - Update Store
 
 - Method : `PUT`
-- Endpoint : `/api/v1/stores/<store_id>`
+- Endpoint : `/api/v1/stores`
 - Header :
   - Content-Type : `application/json`
   - Accept : `application/json`
@@ -209,6 +209,27 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "open_hours": "09.00 - 20.00"
 }
 ```
+
+- response :
+
+```json
+{
+  "message": "Success",
+  "code": 200,
+  "error": "",
+  "data": null
+}
+```
+
+### - Toggle Store Open
+
+- Method : `PATCH`
+- Endpoint : `/api/v1/stores`
+- Header :
+
+  - Content-Type : `application/json`
+  - Accept : `application/json`
+  - Authorization: `Bearer <access_token>`
 
 - response :
 
@@ -244,10 +265,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
       "product_id": "product id",
       "product_name": "product name",
       "description": "description",
-      "image": {
-        "data": [10, 26, 83],
-        "content_type": "image/png"
-      },
+      "image": "data:image/png;base64",
       "price": 20000,
       "stock": 100
     },
@@ -255,10 +273,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
       "product_id": "product id",
       "product_name": "product name",
       "description": "description",
-      "image": {
-        "data": [10, 26, 83],
-        "content_type": "image/png"
-      },
+      "image": "data:image/png;base64",
       "price": 20000,
       "stock": 100
     }
@@ -280,10 +295,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 {
   "product_name": "product name",
   "description": "description",
-  "image": {
-    "data": [10, 26, 83],
-    "content_type": "image/png"
-  },
+  "image": "data:image/png;base64",
   "price": 20000,
   "stock": 100
 }
@@ -315,10 +327,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "product_id": "product id",
   "product_name": "product name",
   "description": "description",
-  "image": {
-    "data": [10, 26, 83],
-    "content_type": "image/png"
-  },
+  "image": "data:image/png;base64",
   "price": 20000,
   "stock": 100
 }
