@@ -15,10 +15,15 @@ jobs:
         env:
           PORT: 8080
           DB_URI: ${{secrets.DB_URI}}
+          JWT_SECRETS: ${{secrets.JWT_SECRETS}}
+          JWT_EXPIRES: "7d"
+
         run: |
           touch .env
-          echo PORT="$PORT" >> .env
-          echo DB_URI="$DB_URI" >> .env
+          echo PORT=$PORT >> .env
+          echo DB_URI=$DB_URI >> .env
+          echo JWT_SECRETS=$JWT_SECRETS >> .env
+          echo JWT_EXPIRES=$JWT_EXPIRES >> .env 
 
           echo "cat .env"
           cat .env
