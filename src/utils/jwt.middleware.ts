@@ -8,6 +8,8 @@ export abstract class IJwtMiddleware {
 }
 
 class JwtMiddleware {
+  jwtUtils = new JwtUtils();
+
   validateToken(req: Request, res: Response, next: NextFunction) {
     let response: HttpResponse<null>;
     try {
@@ -23,7 +25,8 @@ class JwtMiddleware {
         res.status(response.code).json(response);
       } else {
         if (authorization && authorization[1]) {
-          new JwtUtils().verifyToken(authorization[1]);
+          const jwt = this.jwtUtils.verifyToken(authorization[1]);
+          res.locals["jwt"] = jwt;
           next();
         } else {
           throw new Error("missing access token");

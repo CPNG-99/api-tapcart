@@ -267,7 +267,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
       "description": "description",
       "image": "data:image/png;base64",
       "price": 20000,
-      "stock": 100
+      "available": true
     },
     {
       "product_id": "product id",
@@ -275,7 +275,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
       "description": "description",
       "image": "data:image/png;base64",
       "price": 20000,
-      "stock": 100
+      "available": true
     }
   ]
 }
@@ -297,7 +297,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "description": "description",
   "image": "data:image/png;base64",
   "price": 20000,
-  "stock": 100
+  "available": true
 }
 ```
 
@@ -329,7 +329,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "description": "description",
   "image": "data:image/png;base64",
   "price": 20000,
-  "stock": 100
+  "available": true
 }
 ```
 

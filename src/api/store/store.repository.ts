@@ -94,6 +94,7 @@ class StoreRepository implements IStoreRepository {
       return {
         error: "",
         data: {
+          id: store._id,
           store_name: store.storeName,
           store_address: store.storeAddress,
           open_hours: store.openHours,

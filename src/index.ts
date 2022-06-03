@@ -21,6 +21,10 @@ import StoreRoutes from "./api/store/store.routes";
 import QRUtils from "./utils/qr.utils";
 import JwtUtils from "./utils/jwt.utils";
 import JwtMiddleware from "./utils/jwt.middleware";
+import ProductRoutes from "./api/product/product.routes";
+import ProductController from "./api/product/product.controller";
+import ProductService from "./api/product/product.service";
+import ProductRepository from "./api/product/product.repository";
 
 // server config
 const app = express();
@@ -49,6 +53,12 @@ new StoreRoutes(app, storeController, jwtMiddleware);
 const authService = new AuthService(storeRepository, qrUtils, jwtUtils);
 const authController = new AuthController(authService);
 new AuthRoutes(app, authController);
+
+// product
+const productRepository = new ProductRepository();
+const productService = new ProductService(productRepository, storeRepository);
+const productController = new ProductController(productService);
+new ProductRoutes(app, productController, jwtMiddleware);
 
 // 404
 app.use((_, res: express.Response) => {
