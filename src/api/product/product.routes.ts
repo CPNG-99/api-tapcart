@@ -21,7 +21,7 @@ class ProductRoutes extends RoutesConfig {
   configureRoutes(): Application {
     this.app
       .route("/api/v1/products")
-      .all((req: Request, res: Response, next: NextFunction) =>
+      .post((req: Request, res: Response, next: NextFunction) =>
         this.middleware.validateToken(req, res, next)
       )
       .post(async (req: Request, res: Response) => {
@@ -37,6 +37,14 @@ class ProductRoutes extends RoutesConfig {
         }
         const payload = req.body;
         const resp = await this.controller.addProduct(payload, storeId);
+        res.status(resp.code).json(resp);
+      });
+
+    this.app
+      .route("/api/v1/products")
+      .get(async (req: Request, res: Response) => {
+        const storeId = String(req.query?.store_id);
+        const resp = await this.controller.getProductList(storeId);
         res.status(resp.code).json(resp);
       });
 

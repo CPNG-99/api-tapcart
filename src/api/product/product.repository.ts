@@ -4,6 +4,7 @@ import { ProductDAO } from "./product.dao";
 
 export abstract class IProductRepository {
   abstract save(payload: ProductDTO): Promise<{ error: string }>;
+  abstract getList(storeId: string): Promise<ProductDTO[]>;
 }
 
 class ProductRepository implements IProductRepository {
@@ -42,6 +43,31 @@ class ProductRepository implements IProductRepository {
       await product.save();
 
       return { error: "" };
+    } catch (error: any) {
+      throw new Error(error?.message || error);
+    }
+  }
+
+  async getList(storeId: string): Promise<ProductDTO[]> {
+    try {
+      const products = await this.Product.find<ProductDAO>({
+        storeId: storeId,
+      });
+      const resp: ProductDTO[] = [];
+
+      products.map((product) => {
+        resp.push({
+          id: product._id,
+          product_name: product.productName,
+          description: product.description,
+          image: product.image,
+          price: product.price,
+          is_available: product.isAvailable,
+          store_id: product.storeId,
+        });
+      });
+
+      return resp;
     } catch (error: any) {
       throw new Error(error?.message || error);
     }
