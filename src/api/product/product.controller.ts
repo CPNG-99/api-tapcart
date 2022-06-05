@@ -9,6 +9,7 @@ export abstract class IProductController {
     storeId: string
   ): Promise<HttpResponse<null>>;
   abstract getProductList(storeId: string): Promise<HttpResponse<ProductDTO[]>>;
+  abstract deleteProduct(productId: string): Promise<HttpResponse<null>>;
 }
 
 class ProductController implements IProductController {
@@ -52,6 +53,26 @@ class ProductController implements IProductController {
         message: messageStatus[200],
         error: "",
         data: products,
+      };
+    } catch (error: any) {
+      logger.error(error?.message || error);
+      return {
+        code: 500,
+        message: messageStatus[500],
+        error: error?.message || error,
+        data: null,
+      };
+    }
+  }
+
+  async deleteProduct(productId: string): Promise<HttpResponse<null>> {
+    try {
+      const resp = await this.service.deleteProduct(productId);
+      return {
+        code: resp.statusCode,
+        message: messageStatus[resp.statusCode],
+        error: resp.error,
+        data: null,
       };
     } catch (error: any) {
       logger.error(error?.message || error);

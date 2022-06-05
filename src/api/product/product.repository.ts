@@ -5,6 +5,7 @@ import { ProductDAO } from "./product.dao";
 export abstract class IProductRepository {
   abstract save(payload: ProductDTO): Promise<{ error: string }>;
   abstract getList(storeId: string): Promise<ProductDTO[]>;
+  abstract delete(productId: string): Promise<{ error: string }>;
 }
 
 class ProductRepository implements IProductRepository {
@@ -68,6 +69,20 @@ class ProductRepository implements IProductRepository {
       });
 
       return resp;
+    } catch (error: any) {
+      throw new Error(error?.message || error);
+    }
+  }
+
+  async delete(productId: string): Promise<{ error: string }> {
+    try {
+      const deletedProduct = await this.Product.findById<ProductDAO>(productId);
+      if (!deletedProduct) {
+        return { error: "no product found with given id" };
+      }
+
+      await this.Product.remove({ _id: productId });
+      return { error: "" };
     } catch (error: any) {
       throw new Error(error?.message || error);
     }

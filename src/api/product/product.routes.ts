@@ -48,6 +48,17 @@ class ProductRoutes extends RoutesConfig {
         res.status(resp.code).json(resp);
       });
 
+    this.app
+      .route("/api/v1/products/:productId")
+      .delete((req: Request, res: Response, next: NextFunction) =>
+        this.middleware.validateToken(req, res, next)
+      )
+      .delete(async (req: Request, res: Response) => {
+        const productId = req.params.productId;
+        const resp = await this.controller.deleteProduct(productId);
+        res.status(resp.code).json(resp);
+      });
+
     return this.app;
   }
 }

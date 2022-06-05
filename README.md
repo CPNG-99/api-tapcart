@@ -249,7 +249,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 ### - Get Product List
 
 - Method : `GET`
-- Endpoint : `/api/v1/products?store_id=<store_id>&query=<product_name>`
+- Endpoint : `/api/v1/products?store_id=<store_id>`
 - Header :
   - Content-Type : `application/json`
   - Accept : `application/json`
@@ -267,7 +267,8 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
       "description": "description",
       "image": "data:image/png;base64",
       "price": 20000,
-      "available": true
+      "isAvailable": true,
+      "store_id": "store id"
     },
     {
       "product_id": "product id",
@@ -275,7 +276,8 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
       "description": "description",
       "image": "data:image/png;base64",
       "price": 20000,
-      "available": true
+      "isAvailable": true,
+      "store_id": "store id"
     }
   ]
 }
@@ -297,7 +299,8 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "description": "description",
   "image": "data:image/png;base64",
   "price": 20000,
-  "available": true
+  "isAvailable": true,
+  "store_id": "store id"
 }
 ```
 
@@ -329,7 +332,8 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "description": "description",
   "image": "data:image/png;base64",
   "price": 20000,
-  "available": true
+  "isAvailable": true,
+  "store_id": "store id"
 }
 ```
 
@@ -347,7 +351,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 ### - Delete Product
 
 - Method : `DELETE`
-- Endpoint : `/api/v1/products`
+- Endpoint : `/api/v1/products/:product_id`
 - Header :
   - Content-Type : `application/json`
   - Accept : `application/json`

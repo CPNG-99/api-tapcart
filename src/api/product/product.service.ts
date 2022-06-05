@@ -8,6 +8,9 @@ export abstract class IProductService {
     payload: ProductDTO
   ): Promise<{ statusCode: number; error: string }>;
   abstract getProductList(storeId: string): Promise<ProductDTO[]>;
+  abstract deleteProduct(
+    productId: string
+  ): Promise<{ statusCode: number; error: string }>;
 }
 
 class ProductService implements IProductService {
@@ -41,6 +44,25 @@ class ProductService implements IProductService {
   async getProductList(storeId: string): Promise<ProductDTO[]> {
     try {
       return await this.productRepository.getList(storeId);
+    } catch (error: any) {
+      throw new Error(`Fail to login: ${error?.message || error}`);
+    }
+  }
+
+  async deleteProduct(
+    productId: string
+  ): Promise<{ statusCode: number; error: string }> {
+    try {
+      const { error } = await this.productRepository.delete(productId);
+      if (error)
+        return {
+          statusCode: 400,
+          error: error,
+        };
+      return {
+        statusCode: 200,
+        error: error,
+      };
     } catch (error: any) {
       throw new Error(`Fail to login: ${error?.message || error}`);
     }
