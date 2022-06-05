@@ -42,11 +42,14 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 
 ## - API Spec
 
+✅ -> Implemented\
+❌ -> Unimplemented
+
 ## Authentications
 
 ---
 
-### - Register
+### - Register ✅
 
 - Method : `POST`
 - Endpoint : `/auth/v1/register`
@@ -78,7 +81,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Login
+### - Login ✅
 
 - Method : `POST`
 - Endpoint : `/auth/v1/login`
@@ -107,7 +110,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Get User (Store) Info
+### - Get User (Store) Info ❌
 
 - Method : `GET`
 - Endpoint : `/api/v1/profile`
@@ -138,7 +141,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 
 ---
 
-### - Get Store List
+### - Get Store List ❌
 
 - Method : `GET`
 - Endpoint : `/api/v1/stores?query=<store_name>`
@@ -167,7 +170,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Get Store Detail
+### - Get Store Detail ✅
 
 - Method : `GET`
 - Endpoint : `/api/v1/stores/<store_id>`
@@ -192,7 +195,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Update Store
+### - Update Store ❌
 
 - Method : `PUT`
 - Endpoint : `/api/v1/stores`
@@ -221,7 +224,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Toggle Store Open
+### - Toggle Store Open ❌
 
 - Method : `PATCH`
 - Endpoint : `/api/v1/stores`
@@ -246,7 +249,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 
 ---
 
-### - Get Product List
+### - Get Product List ✅
 
 - Method : `GET`
 - Endpoint : `/api/v1/products?store_id=<store_id>`
@@ -283,7 +286,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Add Product
+### - Add Product ✅
 
 - Method : `POST`
 - Endpoint : `/api/v1/products`
@@ -315,7 +318,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Update Product
+### - Update Product ❌
 
 - Method : `PUT`
 - Endpoint : `/api/v1/products`
@@ -348,7 +351,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Delete Product
+### - Delete Product ✅
 
 - Method : `DELETE`
 - Endpoint : `/api/v1/products/:product_id`
@@ -371,7 +374,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 
 ---
 
-### - Checkout Purchases
+### - Checkout Purchases ❌
 
 - Method : `POST`
 - Endpoint : `/api/v1/purchases?store_id=<store_id>`
@@ -400,7 +403,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Cancel Purchase
+### - Cancel Purchase ❌
 
 - Method : `PUT`
 - Endpoint : `/api/v1/purchases?store_id=<store_id>`
@@ -426,7 +429,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Finish Purchase
+### - Finish Purchase ❌
 
 - Method : `POST`
 - Endpoint : `/api/v1/purchases`
