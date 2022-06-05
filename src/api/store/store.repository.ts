@@ -17,7 +17,7 @@ export abstract class IStoreRepository {
 
 class StoreRepository implements IStoreRepository {
   Schema = MongooseService.getMongoose().Schema;
-  storeSchema = new this.Schema({
+  storeSchema = new this.Schema<StoreDAO>({
     _id: String,
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
@@ -37,7 +37,7 @@ class StoreRepository implements IStoreRepository {
     payload: RegisterDTO
   ): Promise<{ error: string; qrCode: string | null }> {
     try {
-      const registeredEmail = await this.Store.findOne({
+      const registeredEmail = await this.Store.findOne<StoreDAO>({
         email: payload.email,
       });
       if (registeredEmail) {
@@ -48,7 +48,7 @@ class StoreRepository implements IStoreRepository {
         };
       }
 
-      const registeredStoreName = await this.Store.findOne({
+      const registeredStoreName = await this.Store.findOne<StoreDAO>({
         storeName: payload.store_name,
       });
       if (registeredStoreName) {
@@ -80,7 +80,7 @@ class StoreRepository implements IStoreRepository {
     storeId: string
   ): Promise<{ error: string; data: StoreDTO | null }> {
     try {
-      const store = await this.Store.findOne({
+      const store = await this.Store.findOne<StoreDAO>({
         _id: storeId,
       });
 
@@ -111,7 +111,7 @@ class StoreRepository implements IStoreRepository {
     email: string
   ): Promise<{ error: string; data: LoginDTO | null }> {
     try {
-      const store = await this.Store.findOne({
+      const store = await this.Store.findOne<StoreDAO>({
         email: email,
       });
 

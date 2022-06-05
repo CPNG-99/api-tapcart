@@ -374,10 +374,10 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 
 ---
 
-### - Checkout Purchases ❌
+### - Checkout Purchases ✅
 
 - Method : `POST`
-- Endpoint : `/api/v1/purchases?store_id=<store_id>`
+- Endpoint : `/api/v1/purchases`
 - Header :
   - Content-Type : `application/json`
   - Accept : `application/json`
@@ -385,7 +385,12 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 
 ```json
 {
-  "product_id": ["product id", "product id"]
+  "products": [
+    {
+      "quantity": 2,
+      "product_id": "product id"
+    }
+  ]
 }
 ```
 
@@ -397,7 +402,6 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "code": 201,
   "error": "",
   "data": {
-    "purchase_id": "purchase id",
     "qr_code": "data:image/png;base64"
   }
 }

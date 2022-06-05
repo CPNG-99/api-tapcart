@@ -25,6 +25,10 @@ import ProductRoutes from "./api/product/product.routes";
 import ProductController from "./api/product/product.controller";
 import ProductService from "./api/product/product.service";
 import ProductRepository from "./api/product/product.repository";
+import PurchaseRepository from "./api/purchase/purchase.repository";
+import PurchaseService from "./api/purchase/purchase.service";
+import PurchaseController from "./api/purchase/purchase.controller";
+import PurchaseRoutes from "./api/purchase/purchase.routes";
 
 // server config
 const app = express();
@@ -59,6 +63,12 @@ const productRepository = new ProductRepository();
 const productService = new ProductService(productRepository, storeRepository);
 const productController = new ProductController(productService);
 new ProductRoutes(app, productController, jwtMiddleware);
+
+// purchase
+const purchaseRepository = new PurchaseRepository(productRepository);
+const purchaseService = new PurchaseService(purchaseRepository, qrUtils);
+const purchaseController = new PurchaseController(purchaseService);
+new PurchaseRoutes(app, purchaseController);
 
 // 404
 app.use((_, res: express.Response) => {
