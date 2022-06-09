@@ -64,7 +64,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "password": "password",
   "store_name": "store name",
   "store_address": "store address",
-  "open_hours": "09.00 - 20.00"
+  "description": "store description"
 }
 ```
 
@@ -130,7 +130,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     "email": "johndoe@gmail.com",
     "store_name": "store name",
     "store_address": "store address",
-    "open_hours": "09.00 - 20.00",
+    "description": "store description",
     "is_open": true,
     "qr_code": "data:image/png;base64"
   }
@@ -141,7 +141,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 
 ---
 
-### - Get Store List ❌
+<!-- ### - Get Store List ❌
 
 - Method : `GET`
 - Endpoint : `/api/v1/stores?query=<store_name>`
@@ -168,7 +168,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     }
   ]
 }
-```
+``` -->
 
 ### - Get Store Detail ✅
 
@@ -188,7 +188,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     "store_id": "store id",
     "store_name": "store name",
     "store_address": "store address",
-    "open_hours": "09.00 - 20.00",
+    "description": "store description",
     "is_open": true,
     "qr_code": "data:image/png;base64"
   }
@@ -209,7 +209,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 {
   "store_name": "store name",
   "store_address": "store address",
-  "open_hours": "09.00 - 20.00"
+  "description": "store description"
 }
 ```
 
@@ -270,7 +270,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
       "description": "description",
       "image": "data:image/png;base64",
       "price": 20000,
-      "isAvailable": true,
+      "is_available": true,
       "store_id": "store id"
     },
     {
@@ -279,7 +279,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
       "description": "description",
       "image": "data:image/png;base64",
       "price": 20000,
-      "isAvailable": true,
+      "is_available": true,
       "store_id": "store id"
     }
   ]
@@ -302,7 +302,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "description": "description",
   "image": "data:image/png;base64",
   "price": 20000,
-  "isAvailable": true,
+  "is_available": true,
   "store_id": "store id"
 }
 ```
@@ -321,7 +321,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 ### - Update Product ❌
 
 - Method : `PUT`
-- Endpoint : `/api/v1/products`
+- Endpoint : `/api/v1/products/:product_id`
 - Header :
   - Content-Type : `application/json`
   - Accept : `application/json`
@@ -330,13 +330,11 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 
 ```json
 {
-  "product_id": "product id",
   "product_name": "product name",
   "description": "description",
   "image": "data:image/png;base64",
   "price": 20000,
-  "isAvailable": true,
-  "store_id": "store id"
+  "is_available": true
 }
 ```
 
@@ -389,6 +387,10 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     {
       "quantity": 2,
       "product_id": "product id"
+    },
+    {
+      "quantity": 2,
+      "product_id": "product id"
     }
   ]
 }
@@ -402,6 +404,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "code": 201,
   "error": "",
   "data": {
+    "purchase_id": "purchase_id",
     "qr_code": "data:image/png;base64"
   }
 }
@@ -409,19 +412,11 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 
 ### - Cancel Purchase ❌
 
-- Method : `PUT`
-- Endpoint : `/api/v1/purchases?store_id=<store_id>`
+- Method : `DELETE`
+- Endpoint : `/api/v1/purchases/:purchase_id`
 - Header :
   - Content-Type : `application/json`
   - Accept : `application/json`
-- body :
-
-```json
-{
-  "purchase_id": "purchase id"
-}
-```
-
 - response :
 
 ```json
@@ -433,28 +428,22 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Finish Purchase ❌
+### - Get Purchase Item ❌
 
-- Method : `POST`
-- Endpoint : `/api/v1/purchases`
+- Method : `GET`
+- Endpoint : `/api/v1/purchases/:purchase_id`
 - Header :
+
   - Content-Type : `application/json`
   - Accept : `application/json`
   - Authorization: `Bearer <access_token>`
-- body :
-
-```json
-{
-  "purchase_id": "purchase id"
-}
-```
 
 - response :
 
 ```json
 {
   "message": "Success",
-  "code": 201,
+  "code": 200,
   "error": "",
   "data": null
 }
