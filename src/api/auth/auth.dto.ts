@@ -3,7 +3,7 @@ export interface RegisterDTO {
   password: string;
   store_name: string;
   store_address: string;
-  open_hours: string;
+  description: string;
 }
 
 export interface LoginDTO {

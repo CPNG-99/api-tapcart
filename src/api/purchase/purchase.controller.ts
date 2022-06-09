@@ -6,7 +6,7 @@ import { IPurchaseService } from "./purchase.service";
 export abstract class IPurchaseController {
   abstract checkoutPurchase(
     payload: PurchaseDTO
-  ): Promise<HttpResponse<{ qrCode: string }>>;
+  ): Promise<HttpResponse<{ qrCode: string; purchase_id: string | null }>>;
 }
 
 class PurchaseController implements IPurchaseController {
@@ -18,14 +18,18 @@ class PurchaseController implements IPurchaseController {
 
   async checkoutPurchase(
     payload: PurchaseDTO
-  ): Promise<HttpResponse<{ qrCode: string }>> {
+  ): Promise<HttpResponse<{ qrCode: string; purchase_id: string | null }>> {
     try {
-      const { qrCode } = await this.service.checkoutPurchase(payload);
+      const {
+        qrCode,
+        purchaseId: purchase_id,
+        error,
+      } = await this.service.checkoutPurchase(payload);
       return {
-        code: 201,
-        message: messageStatus[201],
-        error: "",
-        data: { qrCode },
+        code: !error ? 201 : 400,
+        message: messageStatus[!error ? 201 : 400],
+        error: error,
+        data: !error ? { qrCode, purchase_id } : null,
       };
     } catch (error: any) {
       logger.error(error?.message || error);

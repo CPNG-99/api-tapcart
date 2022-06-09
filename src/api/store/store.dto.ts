@@ -4,7 +4,7 @@ export interface RegisterDTO {
   password: string;
   store_name: string;
   store_address: string;
-  open_hours: string;
+  description: string;
   is_open: boolean;
   qr_code: string;
 }
@@ -16,10 +16,10 @@ export interface LoginDTO {
 }
 
 export interface StoreDTO {
-  id: string;
+  store_id: string;
   store_name: string;
   store_address: string;
-  open_hours: string;
+  description: string;
   is_open: boolean;
   qr_code: string;
 }

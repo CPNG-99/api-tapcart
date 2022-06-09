@@ -1,42 +1,35 @@
 import { PurchaseDTO } from "./purchase.dto";
 import MongooseService from "../../utils/db.connection";
-import { checkoutDAO, PurchaseDAO } from "./purchase.dao";
+import { CheckoutDAO, CheckoutProductsDAO } from "./purchase.dao";
 import { IProductRepository } from "../product/product.repository";
 
 export abstract class IPurchaseRepository {
   abstract save(
     payload: PurchaseDTO,
     checkoutQrCode: string
-  ): Promise<{ qrCode: string }>;
+  ): Promise<{ qrCode: string; error: string }>;
 }
 
 class PurchaseRepository implements IPurchaseRepository {
   productRepository: IProductRepository;
 
   Schema = MongooseService.getMongoose().Schema;
-  purchaseSchema = new this.Schema<PurchaseDAO>({
-    _id: String,
-    productName: { type: String, required: true, unique: true },
-    description: String,
-    image: String,
-    price: Number,
-    isAvailable: { type: Boolean, required: true },
-    storeId: { type: String, required: true },
-    quantity: { type: Number, required: true },
-    purchaseId: { type: String, required: true },
-  });
 
-  checkoutSchema = new this.Schema<checkoutDAO>({
-    _id: String,
-    qrCode: { type: String, required: true, unique: true },
-  });
-
-  Purchase = MongooseService.getMongoose().model<PurchaseDAO>(
-    "purchases",
-    this.purchaseSchema
+  checkoutProductSchema = new this.Schema<CheckoutProductsDAO>(
+    {
+      productId: { type: String, required: true },
+      quantity: { type: Number, required: true },
+    },
+    { _id: false }
   );
 
-  Checkout = MongooseService.getMongoose().model<checkoutDAO>(
+  checkoutSchema = new this.Schema<CheckoutDAO>({
+    _id: String,
+    qrCode: { type: String, required: true, unique: true },
+    products: [this.checkoutProductSchema],
+  });
+
+  Checkout = MongooseService.getMongoose().model<CheckoutDAO>(
     "checkout",
     this.checkoutSchema
   );
@@ -48,33 +41,31 @@ class PurchaseRepository implements IPurchaseRepository {
   async save(
     payload: PurchaseDTO,
     checkoutQrCode: string
-  ): Promise<{ qrCode: string }> {
+  ): Promise<{ qrCode: string; error: string }> {
     try {
-      payload.products.forEach(async ({ quantity, product_id }) => {
+      let isProductsIdValid = true;
+      const purchasedProducts: CheckoutProductsDAO[] = [];
+
+      for (const { quantity, product_id } of payload.products) {
         const product = await this.productRepository.getById(product_id);
-        if (!product) return;
+        if (!product) {
+          isProductsIdValid = false;
+          break;
+        }
+        purchasedProducts.push({ productId: product.id, quantity: quantity });
+      }
 
-        const purchasedProduct = new this.Purchase({
-          _id: product.id,
-          productName: product.product_name,
-          description: product.description,
-          image: product.image,
-          price: product.price,
-          isAvailable: product.is_available,
-          storeId: product.store_id,
-          quantity: quantity,
-          purchaseId: payload.purchase_id,
+      if (isProductsIdValid) {
+        const checkout = new this.Checkout({
+          _id: payload.purchase_id,
+          qrCode: checkoutQrCode,
+          products: purchasedProducts,
         });
-        await purchasedProduct.save();
-      });
+        await checkout.save();
 
-      const checkout = new this.Checkout({
-        _id: payload.purchase_id,
-        qrCode: checkoutQrCode,
-      });
-      await checkout.save();
-
-      return { qrCode: checkoutQrCode };
+        return { qrCode: checkoutQrCode, error: "" };
+      }
+      return { qrCode: "", error: "invalid product id" };
     } catch (error: any) {
       throw new Error(error?.message || error);
     }

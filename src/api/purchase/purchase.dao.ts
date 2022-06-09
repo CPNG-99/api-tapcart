@@ -5,7 +5,13 @@ export interface PurchaseDAO extends ProductDAO {
   purchaseId: string;
 }
 
-export interface checkoutDAO {
+export interface CheckoutDAO {
   _id: string;
   qrCode: string;
+  products: CheckoutProductsDAO[];
+}
+
+export interface CheckoutProductsDAO {
+  productId: string;
+  quantity: number;
 }

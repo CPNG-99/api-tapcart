@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 export abstract class IPurchaseService {
   abstract checkoutPurchase(
     payload: PurchasePayload
-  ): Promise<{ qrCode: string }>;
+  ): Promise<{ qrCode: string; purchaseId: string; error: string }>;
 }
 
 class PurchaseService implements IPurchaseService {
@@ -20,16 +20,20 @@ class PurchaseService implements IPurchaseService {
 
   async checkoutPurchase(
     payload: PurchasePayload
-  ): Promise<{ qrCode: string }> {
+  ): Promise<{ qrCode: string; purchaseId: string; error: string }> {
     try {
       const uuid = uuidv4();
       const qrCode = await this.qrService.generateQR(uuid);
 
-      const { qrCode: savedQrCode } = await this.repository.save(
+      const { qrCode: savedQrCode, error } = await this.repository.save(
         { purchase_id: uuid, ...payload },
         qrCode
       );
-      return { qrCode: savedQrCode };
+      return {
+        qrCode: !error ? savedQrCode : "",
+        purchaseId: !error ? uuid : "",
+        error: error,
+      };
     } catch (error: any) {
       throw new Error(`Fail to login: ${error?.message || error}`);
     }
