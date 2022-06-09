@@ -56,7 +56,7 @@ new StoreRoutes(app, storeController, jwtMiddleware);
 // auth
 const authService = new AuthService(storeRepository, qrUtils, jwtUtils);
 const authController = new AuthController(authService);
-new AuthRoutes(app, authController);
+new AuthRoutes(app, authController, jwtMiddleware);
 
 // product
 const productRepository = new ProductRepository();

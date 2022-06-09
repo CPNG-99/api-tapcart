@@ -1,5 +1,6 @@
 import { HttpResponse, messageStatus } from "../../utils/http.response";
 import { logger } from "../../utils/logger";
+import { StoreDTO } from "../store/store.dto";
 import {
   AccessTokenDTO,
   LoginDTO,
@@ -15,6 +16,7 @@ export abstract class IAuthController {
   abstract login(
     payload: LoginDTO
   ): Promise<HttpResponse<null | AccessTokenDTO>>;
+  abstract getUserInfo(storeId: string): Promise<HttpResponse<StoreDTO | null>>;
 }
 class AuthController implements IAuthController {
   service: IAuthService;
@@ -63,6 +65,26 @@ class AuthController implements IAuthController {
               access_token: resp.data.access_token,
             }
           : null,
+      };
+    } catch (error: any) {
+      logger.error(error?.message || error);
+      return {
+        code: 500,
+        message: messageStatus[500],
+        error: error?.message || error,
+        data: null,
+      };
+    }
+  }
+
+  async getUserInfo(storeId: string): Promise<HttpResponse<StoreDTO | null>> {
+    try {
+      const resp = await this.service.getUserInfo(storeId);
+      return {
+        code: resp ? 200 : 404,
+        message: messageStatus[resp ? 200 : 404],
+        error: resp ? "" : "no user data",
+        data: resp,
       };
     } catch (error: any) {
       logger.error(error?.message || error);

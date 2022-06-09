@@ -1,11 +1,11 @@
-import { LoginDTO, RegisterDTO, StoreDTO } from "./store.dto";
+import { LoginDTO, RegisterStoreDTO, StoreDTO } from "./store.dto";
 import MongooseService from "../../utils/db.connection";
 import { logger } from "../../utils/logger";
 import { StoreDAO } from "./store.dao";
 
 export abstract class IStoreRepository {
   abstract save(
-    store: RegisterDTO
+    store: RegisterStoreDTO
   ): Promise<{ error: string; qrCode: string | null }>;
   abstract getById(
     storeId: string
@@ -34,7 +34,7 @@ class StoreRepository implements IStoreRepository {
   );
 
   async save(
-    payload: RegisterDTO
+    payload: RegisterStoreDTO
   ): Promise<{ error: string; qrCode: string | null }> {
     try {
       const registeredEmail = await this.Store.findOne<StoreDAO>({

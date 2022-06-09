@@ -110,10 +110,10 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Get User (Store) Info ❌
+### - Get User (Store) Info ✅
 
 - Method : `GET`
-- Endpoint : `/api/v1/profile`
+- Endpoint : `/api/v1/users`
 - Header :
   - Content-Type : `application/json`
   - Accept : `application/json`
@@ -127,7 +127,6 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "error": "",
   "data": {
     "store_id": "store id",
-    "email": "johndoe@gmail.com",
     "store_name": "store name",
     "store_address": "store address",
     "description": "store description",

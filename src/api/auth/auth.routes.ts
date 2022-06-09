@@ -1,15 +1,22 @@
-import { Application, Request, Response } from "express";
+import { Application, NextFunction, Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { HttpResponse, messageStatus } from "../../utils/http.response";
+import { IJwtMiddleware } from "../../utils/jwt.middleware";
 import { RoutesConfig } from "../../utils/routes.config";
 import { IAuthController } from "./auth.controller";
 
 class AuthRoutes extends RoutesConfig {
   controller: IAuthController;
+  middleware: IJwtMiddleware;
 
-  constructor(app: Application, controller: IAuthController) {
+  constructor(
+    app: Application,
+    controller: IAuthController,
+    middleware: IJwtMiddleware
+  ) {
     super(app, "AuthRoutes");
     this.controller = controller;
+    this.middleware = middleware;
   }
 
   configureRoutes(): Application {
@@ -61,6 +68,26 @@ class AuthRoutes extends RoutesConfig {
 
         const payload = req.body;
         const resp = await this.controller.login(payload);
+        res.status(resp.code).json(resp);
+      });
+
+    this.app
+      .route("/api/v1/users")
+      .all((req: Request, res: Response, next: NextFunction) =>
+        this.middleware.validateToken(req, res, next)
+      )
+      .get(async (_: Request, res: Response) => {
+        const storeId = res.locals.jwt?.["store_id"];
+        if (!storeId) {
+          const resp: HttpResponse<null> = {
+            code: 403,
+            message: messageStatus[403],
+            error: "Missing jwt signs (store_id)",
+            data: null,
+          };
+          res.status(resp.code).json(resp);
+        }
+        const resp = await this.controller.getUserInfo(storeId);
         res.status(resp.code).json(resp);
       });
 

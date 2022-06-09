@@ -1,4 +1,4 @@
-export interface RegisterDTO {
+export interface RegisterStoreDTO {
   _id: string;
   email: string;
   password: string;

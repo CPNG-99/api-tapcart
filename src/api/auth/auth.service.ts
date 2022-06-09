@@ -1,6 +1,6 @@
 import { IStoreRepository } from "../store/store.repository";
 import { AccessTokenDTO, LoginDTO, RegisterDTO } from "./auth.dto";
-import { RegisterDTO as StoreDTO } from "../store/store.dto";
+import { RegisterStoreDTO, StoreDTO } from "../store/store.dto";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import { IQRUtils } from "../../utils/qr.utils";
@@ -15,6 +15,7 @@ export abstract class IAuthService {
     error: string;
     data: AccessTokenDTO | null;
   }>;
+  abstract getUserInfo(storeId: string): Promise<StoreDTO | null>;
 }
 
 class AuthService implements IAuthService {
@@ -41,7 +42,7 @@ class AuthService implements IAuthService {
 
       const qrCode = await this.qrService.generateQR(uuid);
 
-      const store: StoreDTO = {
+      const store: RegisterStoreDTO = {
         _id: uuid,
         email: payload.email,
         password: hashedPassowrd,
@@ -105,6 +106,15 @@ class AuthService implements IAuthService {
       };
     } catch (error: any) {
       throw new Error(`Fail to login: ${error?.message || error}`);
+    }
+  }
+
+  async getUserInfo(storeId: string): Promise<StoreDTO | null> {
+    try {
+      const resp = await this.repository.getById(storeId);
+      return resp.data;
+    } catch (error: any) {
+      throw new Error(`Fail to fetch user info: ${error?.message || error}`);
     }
   }
 }
