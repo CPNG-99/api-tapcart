@@ -14,7 +14,6 @@ class ProductRepository implements IProductRepository {
   productSchema = new this.Schema<ProductDAO>({
     _id: String,
     productName: { type: String, required: true, unique: true },
-    description: String,
     image: String,
     price: Number,
     isAvailable: { type: Boolean, required: true },
@@ -36,7 +35,6 @@ class ProductRepository implements IProductRepository {
       const product = new this.Product({
         _id: payload.id,
         productName: payload.product_name,
-        description: payload.description,
         image: payload.image,
         price: payload.price,
         isAvailable: payload.is_available,
@@ -61,7 +59,6 @@ class ProductRepository implements IProductRepository {
         resp.push({
           id: product._id,
           product_name: product.productName,
-          description: product.description,
           image: product.image,
           price: product.price,
           is_available: product.isAvailable,
@@ -83,7 +80,6 @@ class ProductRepository implements IProductRepository {
       const resp: ProductDTO = {
         id: product._id,
         product_name: product.productName,
-        description: product.description,
         image: product.image,
         price: product.price,
         is_available: product.isAvailable,
