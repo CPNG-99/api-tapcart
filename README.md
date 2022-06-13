@@ -139,35 +139,6 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 
 ---
 
-<!-- ### - Get Store List ❌
-
-- Method : `GET`
-- Endpoint : `/api/v1/stores?query=<store_name>`
-- Header :
-  - Content-Type : `application/json`
-  - Accept : `application/json`
-- response :
-
-```json
-{
-  "message": "Success",
-  "code": 200,
-  "error": "",
-  "data": [
-    {
-      "store_id": "store id",
-      "store_name": "store name",
-      "store_address": "store address"
-    },
-    {
-      "store_id": "store id",
-      "store_name": "store name",
-      "store_address": "store address"
-    }
-  ]
-}
-``` -->
-
 ### - Get Store Detail ✅
 
 - Method : `GET`
@@ -264,7 +235,6 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     {
       "product_id": "product id",
       "product_name": "product name",
-      "open_hours": "open_hours",
       "image": "data:image/png;base64",
       "price": 20000,
       "is_available": true,
@@ -273,7 +243,6 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     {
       "product_id": "product id",
       "product_name": "product name",
-      "open_hours": "open_hours",
       "image": "data:image/png;base64",
       "price": 20000,
       "is_available": true,
@@ -296,7 +265,6 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 ```json
 {
   "product_name": "product name",
-  "open_hours": "open_hours",
   "image": "data:image/png;base64",
   "price": 20000,
   "is_available": true,
@@ -328,7 +296,6 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 ```json
 {
   "product_name": "product name",
-  "open_hours": "open_hours",
   "image": "data:image/png;base64",
   "price": 20000,
   "is_available": true
@@ -425,7 +392,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Get Purchase Item ❌
+### - Get Purchase Item (Store Checkout) ❌
 
 - Method : `GET`
 - Endpoint : `/api/v1/purchases/:purchase_id`
@@ -442,6 +409,24 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "message": "Success",
   "code": 200,
   "error": "",
-  "data": null
+  "data": {
+    "total_price": 40000,
+    "items": [
+      {
+        "quantity": 2,
+        "product_name": "product name",
+        "image": "data:image/png;base64",
+        "price": 20000,
+        "is_available": true
+      },
+      {
+        "quantity": 2,
+        "product_name": "product name",
+        "image": "data:image/png;base64",
+        "price": 20000,
+        "is_available": true
+      }
+    ]
+  }
 }
 ```
