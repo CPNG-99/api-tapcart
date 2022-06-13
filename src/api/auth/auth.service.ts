@@ -48,8 +48,7 @@ class AuthService implements IAuthService {
         password: hashedPassowrd,
         store_name: payload.store_name,
         store_address: payload.store_address,
-        description: payload.description,
-        is_open: false,
+        open_hours: payload.open_hours,
         qr_code: qrCode,
       };
 

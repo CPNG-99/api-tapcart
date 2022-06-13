@@ -64,7 +64,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "password": "password",
   "store_name": "store name",
   "store_address": "store address",
-  "description": "store description"
+  "open_hours": "07.00 - 20.00"
 }
 ```
 
@@ -129,8 +129,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     "store_id": "store id",
     "store_name": "store name",
     "store_address": "store address",
-    "description": "store description",
-    "is_open": true,
+    "open_hours": "07.00 - 20.00",
     "qr_code": "data:image/png;base64"
   }
 }
@@ -187,8 +186,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     "store_id": "store id",
     "store_name": "store name",
     "store_address": "store address",
-    "description": "store description",
-    "is_open": true,
+    "open_hours": "07.00 - 20.00",
     "qr_code": "data:image/png;base64"
   }
 }
@@ -208,7 +206,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 {
   "store_name": "store name",
   "store_address": "store address",
-  "description": "store description"
+  "open_hours": "07.00 - 20.00"
 }
 ```
 
@@ -266,7 +264,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     {
       "product_id": "product id",
       "product_name": "product name",
-      "description": "description",
+      "open_hours": "open_hours",
       "image": "data:image/png;base64",
       "price": 20000,
       "is_available": true,
@@ -275,7 +273,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
     {
       "product_id": "product id",
       "product_name": "product name",
-      "description": "description",
+      "open_hours": "open_hours",
       "image": "data:image/png;base64",
       "price": 20000,
       "is_available": true,
@@ -298,7 +296,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 ```json
 {
   "product_name": "product name",
-  "description": "description",
+  "open_hours": "open_hours",
   "image": "data:image/png;base64",
   "price": 20000,
   "is_available": true,
@@ -330,7 +328,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 ```json
 {
   "product_name": "product name",
-  "description": "description",
+  "open_hours": "open_hours",
   "image": "data:image/png;base64",
   "price": 20000,
   "is_available": true
