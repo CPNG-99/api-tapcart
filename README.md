@@ -374,7 +374,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Cancel Purchase ❌
+### - Cancel Purchase ✅
 
 - Method : `DELETE`
 - Endpoint : `/api/v1/purchases/:purchase_id`

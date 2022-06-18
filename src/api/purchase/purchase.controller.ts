@@ -7,6 +7,7 @@ export abstract class IPurchaseController {
   abstract checkoutPurchase(
     payload: PurchaseDTO
   ): Promise<HttpResponse<{ qrCode: string; purchase_id: string | null }>>;
+  abstract cancelPurchase(purchaseId: string): Promise<HttpResponse<null>>;
 }
 
 class PurchaseController implements IPurchaseController {
@@ -30,6 +31,34 @@ class PurchaseController implements IPurchaseController {
         message: messageStatus[!error ? 201 : 400],
         error: error,
         data: !error ? { qrCode, purchase_id } : null,
+      };
+    } catch (error: any) {
+      logger.error(error?.message || error);
+      return {
+        code: 500,
+        message: messageStatus[500],
+        error: error?.message || error,
+        data: null,
+      };
+    }
+  }
+
+  async cancelPurchase(purchaseId: string): Promise<HttpResponse<null>> {
+    try {
+      const { error } = await this.service.cancelPurchase(purchaseId);
+      if (error) {
+        return {
+          code: 400,
+          message: messageStatus[400],
+          error: error,
+          data: null,
+        };
+      }
+      return {
+        code: 200,
+        message: messageStatus[200],
+        error: "",
+        data: null,
       };
     } catch (error: any) {
       logger.error(error?.message || error);

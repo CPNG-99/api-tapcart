@@ -7,6 +7,7 @@ export abstract class IPurchaseService {
   abstract checkoutPurchase(
     payload: PurchasePayload
   ): Promise<{ qrCode: string; purchaseId: string; error: string }>;
+  abstract cancelPurchase(purchaseId: string): Promise<{ error: string }>;
 }
 
 class PurchaseService implements IPurchaseService {
@@ -35,7 +36,16 @@ class PurchaseService implements IPurchaseService {
         error: error,
       };
     } catch (error: any) {
-      throw new Error(`Fail to login: ${error?.message || error}`);
+      throw new Error(`Fail checkout: ${error?.message || error}`);
+    }
+  }
+
+  async cancelPurchase(purchaseId: string): Promise<{ error: string }> {
+    try {
+      const resp = await this.repository.delete(purchaseId);
+      return resp;
+    } catch (error: any) {
+      throw new Error(`Fail to cancel purchase: ${error?.message || error}`);
     }
   }
 }

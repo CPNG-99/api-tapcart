@@ -8,6 +8,7 @@ export abstract class IPurchaseRepository {
     payload: PurchaseDTO,
     checkoutQrCode: string
   ): Promise<{ qrCode: string; error: string }>;
+  abstract delete(purchaseId: string): Promise<{ error: string }>;
 }
 
 class PurchaseRepository implements IPurchaseRepository {
@@ -66,6 +67,19 @@ class PurchaseRepository implements IPurchaseRepository {
         return { qrCode: checkoutQrCode, error: "" };
       }
       return { qrCode: "", error: "invalid product id" };
+    } catch (error: any) {
+      throw new Error(error?.message || error);
+    }
+  }
+
+  async delete(purchaseId: string): Promise<{ error: string }> {
+    try {
+      const deletedPurchase = await this.Checkout.findOne({ _id: purchaseId });
+      if (!deletedPurchase) {
+        return { error: "no checkout found with given id" };
+      }
+      await this.Checkout.remove({ _id: purchaseId });
+      return { error: "" };
     } catch (error: any) {
       throw new Error(error?.message || error);
     }

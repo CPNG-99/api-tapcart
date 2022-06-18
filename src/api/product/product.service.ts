@@ -45,7 +45,7 @@ class ProductService implements IProductService {
     try {
       return await this.productRepository.getList(storeId);
     } catch (error: any) {
-      throw new Error(`Fail to login: ${error?.message || error}`);
+      throw new Error(`Fail to add product: ${error?.message || error}`);
     }
   }
 
@@ -64,7 +64,7 @@ class ProductService implements IProductService {
         error: error,
       };
     } catch (error: any) {
-      throw new Error(`Fail to login: ${error?.message || error}`);
+      throw new Error(`Fail to delete product: ${error?.message || error}`);
     }
   }
 

@@ -19,6 +19,14 @@ class PurchaseRoutes extends RoutesConfig {
         res.status(resp.code).json(resp);
       });
 
+    this.app
+      .route("/api/v1/purchases/:purchaseId")
+      .delete(async (req: Request, res: Response) => {
+        const { purchaseId } = req.params;
+        const resp = await this.controller.cancelPurchase(purchaseId);
+        res.status(resp.code).json(resp);
+      });
+
     return this.app;
   }
 }
