@@ -29,7 +29,6 @@ class AuthController implements IAuthController {
     payload: RegisterDTO
   ): Promise<HttpResponse<null | RegisteredDTO>> {
     try {
-      logger.info(JSON.stringify(payload));
       const resp = await this.service.register(payload);
       return {
         code: resp.statusCode,
@@ -54,7 +53,6 @@ class AuthController implements IAuthController {
 
   async login(payload: LoginDTO): Promise<HttpResponse<null | AccessTokenDTO>> {
     try {
-      logger.info(JSON.stringify(payload));
       const resp = await this.service.login(payload);
       return {
         code: resp.statusCode,

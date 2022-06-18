@@ -392,7 +392,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Get Purchase Item (Store Checkout) ❌
+### - Get Purchase Item (Store Checkout) ✅
 
 - Method : `GET`
 - Endpoint : `/api/v1/purchases/:purchase_id`

@@ -1,4 +1,8 @@
-import { PurchaseDTO } from "./purchase.dto";
+import {
+  CheckoutListDTO,
+  CheckoutProductDTO,
+  PurchaseDTO,
+} from "./purchase.dto";
 import MongooseService from "../../utils/db.connection";
 import { CheckoutDAO, CheckoutProductsDAO } from "./purchase.dao";
 import { IProductRepository } from "../product/product.repository";
@@ -9,6 +13,9 @@ export abstract class IPurchaseRepository {
     checkoutQrCode: string
   ): Promise<{ qrCode: string; error: string }>;
   abstract delete(purchaseId: string): Promise<{ error: string }>;
+  abstract getList(
+    purchaseId: string
+  ): Promise<{ data: CheckoutListDTO | null; storeId: string; error: string }>;
 }
 
 class PurchaseRepository implements IPurchaseRepository {
@@ -26,6 +33,7 @@ class PurchaseRepository implements IPurchaseRepository {
 
   checkoutSchema = new this.Schema<CheckoutDAO>({
     _id: String,
+    storeId: { type: String, required: true },
     qrCode: { type: String, required: true, unique: true },
     products: [this.checkoutProductSchema],
   });
@@ -45,6 +53,7 @@ class PurchaseRepository implements IPurchaseRepository {
   ): Promise<{ qrCode: string; error: string }> {
     try {
       let isProductsIdValid = true;
+      let storeId = "";
       const purchasedProducts: CheckoutProductsDAO[] = [];
 
       for (const { quantity, product_id } of payload.products) {
@@ -53,12 +62,14 @@ class PurchaseRepository implements IPurchaseRepository {
           isProductsIdValid = false;
           break;
         }
+        storeId = product.store_id;
         purchasedProducts.push({ productId: product.id, quantity: quantity });
       }
 
       if (isProductsIdValid) {
         const checkout = new this.Checkout({
           _id: payload.purchase_id,
+          storeId: storeId,
           qrCode: checkoutQrCode,
           products: purchasedProducts,
         });
@@ -80,6 +91,53 @@ class PurchaseRepository implements IPurchaseRepository {
       }
       await this.Checkout.remove({ _id: purchaseId });
       return { error: "" };
+    } catch (error: any) {
+      throw new Error(error?.message || error);
+    }
+  }
+
+  async getList(
+    purchaseId: string
+  ): Promise<{ data: CheckoutListDTO | null; storeId: string; error: string }> {
+    try {
+      const checkout = await this.Checkout.findOne<CheckoutDAO>({
+        _id: purchaseId,
+      });
+      if (!checkout) {
+        return {
+          data: null,
+          storeId: "",
+          error: "no checkout found with given id",
+        };
+      }
+
+      let totalPrice = 0;
+      const checkoutItems: CheckoutProductDTO[] = [];
+      let storeId = "";
+
+      for (const item of checkout.products) {
+        const product = await this.productRepository.getById(item.productId);
+        if (product) {
+          totalPrice += product.price * item.quantity;
+          checkoutItems.push({
+            quantity: item.quantity,
+            product_name: product.product_name,
+            image: product.image,
+            price: product.price * item.quantity,
+            is_available: product.is_available,
+          });
+          storeId = product.store_id;
+        }
+      }
+
+      return {
+        data: {
+          total_price: totalPrice,
+          items: checkoutItems,
+        },
+        storeId: storeId,
+        error: "",
+      };
     } catch (error: any) {
       throw new Error(error?.message || error);
     }

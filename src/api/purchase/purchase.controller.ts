@@ -1,6 +1,6 @@
 import { HttpResponse, messageStatus } from "../../utils/http.response";
 import { logger } from "../../utils/logger";
-import { PurchaseDTO } from "./purchase.dto";
+import { CheckoutListDTO, PurchaseDTO } from "./purchase.dto";
 import { IPurchaseService } from "./purchase.service";
 
 export abstract class IPurchaseController {
@@ -8,6 +8,10 @@ export abstract class IPurchaseController {
     payload: PurchaseDTO
   ): Promise<HttpResponse<{ qrCode: string; purchase_id: string | null }>>;
   abstract cancelPurchase(purchaseId: string): Promise<HttpResponse<null>>;
+  abstract getCheckoutList(
+    storeId: string,
+    purchaseId: string
+  ): Promise<HttpResponse<CheckoutListDTO>>;
 }
 
 class PurchaseController implements IPurchaseController {
@@ -59,6 +63,40 @@ class PurchaseController implements IPurchaseController {
         message: messageStatus[200],
         error: "",
         data: null,
+      };
+    } catch (error: any) {
+      logger.error(error?.message || error);
+      return {
+        code: 500,
+        message: messageStatus[500],
+        error: error?.message || error,
+        data: null,
+      };
+    }
+  }
+
+  async getCheckoutList(
+    storeId: string,
+    purchaseId: string
+  ): Promise<HttpResponse<CheckoutListDTO>> {
+    try {
+      const { statusCode, data, error } = await this.service.getCheckoutItems(
+        storeId,
+        purchaseId
+      );
+      if (error) {
+        return {
+          code: statusCode,
+          message: messageStatus[statusCode],
+          error,
+          data: null,
+        };
+      }
+      return {
+        code: statusCode,
+        message: messageStatus[200],
+        error: "",
+        data,
       };
     } catch (error: any) {
       logger.error(error?.message || error);

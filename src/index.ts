@@ -68,7 +68,7 @@ new ProductRoutes(app, productController, jwtMiddleware);
 const purchaseRepository = new PurchaseRepository(productRepository);
 const purchaseService = new PurchaseService(purchaseRepository, qrUtils);
 const purchaseController = new PurchaseController(purchaseService);
-new PurchaseRoutes(app, purchaseController);
+new PurchaseRoutes(app, purchaseController, jwtMiddleware);
 
 // 404
 app.use((_, res: express.Response) => {

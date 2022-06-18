@@ -8,4 +8,17 @@ export interface PurchaseDTO {
   ];
 }
 
+export interface CheckoutListDTO {
+  total_price: number;
+  items: CheckoutProductDTO[];
+}
+
+export interface CheckoutProductDTO {
+  quantity: number;
+  product_name: string;
+  image: string;
+  price: number;
+  is_available: boolean;
+}
+
 export interface PurchasePayload extends Omit<PurchaseDTO, "purchase_id"> {}
