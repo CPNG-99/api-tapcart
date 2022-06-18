@@ -192,27 +192,6 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
 }
 ```
 
-### - Toggle Store Open ❌
-
-- Method : `PATCH`
-- Endpoint : `/api/v1/stores`
-- Header :
-
-  - Content-Type : `application/json`
-  - Accept : `application/json`
-  - Authorization: `Bearer <access_token>`
-
-- response :
-
-```json
-{
-  "message": "Success",
-  "code": 200,
-  "error": "",
-  "data": null
-}
-```
-
 ## Products
 
 ---
