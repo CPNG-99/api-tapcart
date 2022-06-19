@@ -21,3 +21,6 @@ export interface StoreDTO {
   open_hours: string;
   qr_code: string;
 }
+
+export interface UpdateStoreDTO
+  extends Omit<StoreDTO, "store_id" | "qr_code"> {}

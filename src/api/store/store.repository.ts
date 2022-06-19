@@ -1,4 +1,9 @@
-import { LoginDTO, RegisterStoreDTO, StoreDTO } from "./store.dto";
+import {
+  LoginDTO,
+  RegisterStoreDTO,
+  StoreDTO,
+  UpdateStoreDTO,
+} from "./store.dto";
 import MongooseService from "../../utils/db.connection";
 import { logger } from "../../utils/logger";
 import { StoreDAO } from "./store.dao";
@@ -13,6 +18,10 @@ export abstract class IStoreRepository {
   abstract getByEmail(
     email: string
   ): Promise<{ error: string; data: LoginDTO | null }>;
+  abstract update(
+    storeId: string,
+    payload: UpdateStoreDTO
+  ): Promise<{ error: string }>;
 }
 
 class StoreRepository implements IStoreRepository {
@@ -127,6 +136,27 @@ class StoreRepository implements IStoreRepository {
           password: store.password,
         },
       };
+    } catch (error: any) {
+      throw new Error(error?.message || error);
+    }
+  }
+
+  async update(
+    storeId: string,
+    payload: UpdateStoreDTO
+  ): Promise<{ error: string }> {
+    try {
+      const updated = await this.Store.findOneAndUpdate<StoreDAO>(
+        { _id: storeId },
+        {
+          storeName: payload.store_name,
+          storeAddress: payload.store_address,
+          openHours: payload.open_hours,
+        }
+      );
+
+      if (!updated) return { error: "no store found with given id" };
+      return { error: "" };
     } catch (error: any) {
       throw new Error(error?.message || error);
     }
