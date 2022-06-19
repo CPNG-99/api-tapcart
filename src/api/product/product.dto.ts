@@ -6,3 +6,5 @@ export interface ProductDTO {
   is_available: boolean;
   store_id: string;
 }
+
+export interface UpdateProductDTO extends Omit<ProductDTO, "id" | "store_id"> {}

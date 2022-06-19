@@ -1,6 +1,6 @@
 import { HttpResponse, messageStatus } from "../../utils/http.response";
 import { logger } from "../../utils/logger";
-import { ProductDTO } from "./product.dto";
+import { ProductDTO, UpdateProductDTO } from "./product.dto";
 import { IProductService } from "./product.service";
 
 export abstract class IProductController {
@@ -10,6 +10,10 @@ export abstract class IProductController {
   ): Promise<HttpResponse<null>>;
   abstract getProductList(storeId: string): Promise<HttpResponse<ProductDTO[]>>;
   abstract deleteProduct(productId: string): Promise<HttpResponse<null>>;
+  abstract updateProduct(
+    productId: string,
+    payload: UpdateProductDTO
+  ): Promise<HttpResponse<null>>;
 }
 
 class ProductController implements IProductController {
@@ -72,6 +76,29 @@ class ProductController implements IProductController {
         code: resp.statusCode,
         message: messageStatus[resp.statusCode],
         error: resp.error,
+        data: null,
+      };
+    } catch (error: any) {
+      logger.error(error?.message || error);
+      return {
+        code: 500,
+        message: messageStatus[500],
+        error: error?.message || error,
+        data: null,
+      };
+    }
+  }
+
+  async updateProduct(
+    productId: string,
+    payload: UpdateProductDTO
+  ): Promise<HttpResponse<null>> {
+    try {
+      const { error } = await this.service.updateProduct(productId, payload);
+      return {
+        code: !error ? 200 : 400,
+        message: messageStatus[!error ? 200 : 400],
+        error,
         data: null,
       };
     } catch (error: any) {

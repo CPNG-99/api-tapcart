@@ -1,4 +1,4 @@
-import { ProductDTO } from "./product.dto";
+import { ProductDTO, UpdateProductDTO } from "./product.dto";
 import MongooseService from "../../utils/db.connection";
 import { ProductDAO } from "./product.dao";
 
@@ -7,6 +7,10 @@ export abstract class IProductRepository {
   abstract getList(storeId: string): Promise<ProductDTO[]>;
   abstract getById(productId: string): Promise<ProductDTO | null>;
   abstract delete(productId: string): Promise<{ error: string }>;
+  abstract update(
+    productId: string,
+    payload: UpdateProductDTO
+  ): Promise<{ error: string }>;
 }
 
 class ProductRepository implements IProductRepository {
@@ -99,6 +103,27 @@ class ProductRepository implements IProductRepository {
       }
 
       await this.Product.remove({ _id: productId });
+      return { error: "" };
+    } catch (error: any) {
+      throw new Error(error?.message || error);
+    }
+  }
+
+  async update(
+    productId: string,
+    payload: UpdateProductDTO
+  ): Promise<{ error: string }> {
+    try {
+      const updated = await this.Product.findOneAndUpdate<ProductDAO>(
+        { _id: productId },
+        {
+          productName: payload.product_name,
+          image: payload.image,
+          price: payload.price,
+          isAvailable: payload.is_available,
+        }
+      );
+      if (!updated) return { error: "no product found with given id" };
       return { error: "" };
     } catch (error: any) {
       throw new Error(error?.message || error);

@@ -1,5 +1,5 @@
 import { IStoreRepository } from "../store/store.repository";
-import { ProductDTO } from "./product.dto";
+import { ProductDTO, UpdateProductDTO } from "./product.dto";
 import { IProductRepository } from "./product.repository";
 import { v4 as uuidv4 } from "uuid";
 
@@ -11,6 +11,10 @@ export abstract class IProductService {
   abstract deleteProduct(
     productId: string
   ): Promise<{ statusCode: number; error: string }>;
+  abstract updateProduct(
+    productId: string,
+    payload: UpdateProductDTO
+  ): Promise<{ error: string }>;
 }
 
 class ProductService implements IProductService {
@@ -63,6 +67,17 @@ class ProductService implements IProductService {
         statusCode: 200,
         error: error,
       };
+    } catch (error: any) {
+      throw new Error(`Fail to delete product: ${error?.message || error}`);
+    }
+  }
+
+  async updateProduct(
+    productId: string,
+    payload: UpdateProductDTO
+  ): Promise<{ error: string }> {
+    try {
+      return await this.productRepository.update(productId, payload);
     } catch (error: any) {
       throw new Error(`Fail to delete product: ${error?.message || error}`);
     }

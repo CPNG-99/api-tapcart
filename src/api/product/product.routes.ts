@@ -59,6 +59,29 @@ class ProductRoutes extends RoutesConfig {
         res.status(resp.code).json(resp);
       });
 
+    this.app
+      .route("/api/v1/products/:productId")
+      .put((req: Request, res: Response, next: NextFunction) =>
+        this.middleware.validateToken(req, res, next)
+      )
+      .put(async (req: Request, res: Response) => {
+        const storeId = res.locals.jwt?.["store_id"];
+        if (!storeId) {
+          const resp: HttpResponse<null> = {
+            code: 403,
+            message: messageStatus[403],
+            error: "Missing jwt signs (store_id)",
+            data: null,
+          };
+          res.status(resp.code).json(resp);
+        }
+
+        const { productId } = req.params;
+        const payload = req.body;
+        const resp = await this.controller.updateProduct(productId, payload);
+        res.status(resp.code).json(resp);
+      });
+
     return this.app;
   }
 }
