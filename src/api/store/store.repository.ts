@@ -32,6 +32,7 @@ class StoreRepository implements IStoreRepository {
     password: { type: String, required: true },
     storeName: { type: String, unique: true, required: true },
     storeAddress: { type: String },
+    image: { type: String },
     openHours: { type: String },
     qrCode: { type: String, required: true, unique: true },
   });
@@ -73,6 +74,7 @@ class StoreRepository implements IStoreRepository {
         password: payload.password,
         storeName: payload.store_name,
         storeAddress: payload.store_address,
+        image: payload.image,
         openHours: payload.open_hours,
         qrCode: payload.qr_code,
       });
@@ -104,6 +106,7 @@ class StoreRepository implements IStoreRepository {
           store_id: store._id,
           store_name: store.storeName,
           store_address: store.storeAddress,
+          image: store.image,
           open_hours: store.openHours,
           qr_code: store.qrCode,
         },
@@ -151,6 +154,7 @@ class StoreRepository implements IStoreRepository {
         {
           storeName: payload.store_name,
           storeAddress: payload.store_address,
+          image: payload.image,
           openHours: payload.open_hours,
         }
       );

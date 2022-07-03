@@ -4,6 +4,7 @@ export interface StoreDAO {
   password: string;
   storeName: string;
   storeAddress: string;
+  image: string;
   openHours: string;
   qrCode: string;
 }

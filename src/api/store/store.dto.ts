@@ -4,6 +4,7 @@ export interface RegisterStoreDTO {
   password: string;
   store_name: string;
   store_address: string;
+  image: string;
   open_hours: string;
   qr_code: string;
 }
@@ -18,6 +19,7 @@ export interface StoreDTO {
   store_id: string;
   store_name: string;
   store_address: string;
+  image: string;
   open_hours: string;
   qr_code: string;
 }
