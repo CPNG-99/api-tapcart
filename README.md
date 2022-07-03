@@ -247,8 +247,7 @@ Just push to `master` branch, `Github Actions` will take care the delpoyment.
   "product_name": "product name",
   "image": "data:image/png;base64",
   "price": 20000,
-  "is_available": true,
-  "store_id": "store id"
+  "is_available": true
 }
 ```
 
