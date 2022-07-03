@@ -11,7 +11,8 @@ class QRUtils implements IQRUtils {
       .catch((err) => {
         throw new Error(err);
       });
-    return qrCode;
+    const base64 = qrCode.split(",")[1];
+    return base64;
   }
 }
 
